@@ -1,33 +1,76 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:shop2/src/config/routs/app_routs.dart';
+=======
+import 'package:shop2/bloc_observer.dart';
+import 'package:shop2/src/UI/theme/theme.dart';
+import 'package:shop2/src/config/end_points.dart';
+import 'package:shop2/src/core/route/routes.dart';
+import 'package:shop2/src/cubit/home_screen_cubit/cubit.dart';
+import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
+import 'package:shop2/src/data/local/cache_helper.dart';
+import 'package:shop2/src/data/remote/dio_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+>>>>>>> 53259dfefd2c9ffe448a88fabc30c166979518d1
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DioHelper.init();
+  Bloc.observer = MyBlocObserver();
+
+  await CacheHelper.init();
+
+  //check if is first && if is login
+
+  bool isFirst = CacheHelper.getData(key: 'isFirst') ?? false;
+  token = CacheHelper.getData(key: 'token') ?? '';
+  String? initRoute;
+  if (isFirst) {
+    if (token!.isNotEmpty) {
+      initRoute = '/home';
+    } else {
+      initRoute = '/login';
+    }
+  } else {
+    initRoute = '/';
+  }
+
+  runApp(MyApp(initRoute: initRoute));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  const MyApp({Key? key, required this.initRoute}) : super(key: key);
+  final String? initRoute;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ShopCubit>(
+          create: (BuildContext context) => ShopCubit(),
+        ),
+      ],
+      child: BlocConsumer<ShopCubit, ShopState>(
+        listener: (context, index) {},
+        builder: (context, index) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Training',
+            theme: lightThemeData,
+            darkTheme: darkThemeData,
+            themeMode: ThemeMode.system,
+            initialRoute: initRoute,
+            onGenerateRoute: AppRoute.generateRoutes,
+          );
+        },
       ),
+<<<<<<< HEAD
       onGenerateRoute: AppRoutes.onGenerateRoutes,
       initialRoute: '/',
       // home: const MyHomePage(),
+=======
+>>>>>>> 53259dfefd2c9ffe448a88fabc30c166979518d1
     );
-  }
-}
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
