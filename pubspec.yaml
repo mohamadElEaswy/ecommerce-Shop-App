@@ -48,6 +48,9 @@ dev_dependencies:
   bloc: ^7.2.1
   flutter_bloc: ^7.3.0
   smooth_page_indicator: ^1.0.0+2
+  dio: ^4.0.0
+  shared_preferences: ^2.0.8
+  fluttertoast: ^8.0.8
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -7,3 +7,12 @@ void navigateAndRemove({required BuildContext context, required String newRouteN
         (Route<dynamic> route) => false,
   );
 }
+
+
+void navigate({required BuildContext context, required String newRouteName, Object? args}) {
+  Navigator.pushNamed(
+    context,
+    newRouteName,
+    arguments: args,
+  );
+}

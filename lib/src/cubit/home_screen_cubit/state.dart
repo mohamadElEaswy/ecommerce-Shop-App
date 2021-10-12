@@ -1,13 +1,54 @@
-abstract class ShopState{}
+import 'package:shop2/src/core/models/user_model.dart';
 
-class InitialShopState extends ShopState{}
+abstract class ShopState {}
 
-class LoadingShopState extends ShopState{}
+class InitialShopState extends ShopState {}
 
-class LoginShopState extends ShopState{}
+class LoadingShopState extends ShopState {}
 
-class LoginErrorShopState extends ShopState{
+class LoginShopState extends ShopState {}
+
+class LoginErrorShopState extends ShopState {
   final String error;
 
   LoginErrorShopState(this.error);
+}
+
+class ChangeBottomNavigationState extends ShopState {}
+
+class ChangePasswordVisibilityState extends ShopState {}
+
+
+class LoginLoadingState extends ShopState {}
+
+class LoginSuccessState extends ShopState {
+  final UserModel userModel;
+
+  LoginSuccessState(this.userModel);
+}
+
+class LoginErrorState extends ShopState {
+  final String error;
+
+  LoginErrorState(this.error);
+}
+
+class RegisterLoadingState extends ShopState {}
+
+class RegisterSuccessState extends ShopState {}
+
+class RegisterErrorState extends ShopState {
+  final String error;
+
+  RegisterErrorState(this.error);
+}
+
+class HomeDataLoadingState extends ShopState {}
+
+class HomeDataSuccessState extends ShopState {}
+
+class HomeDataErrorState extends ShopState {
+  final String error;
+
+  HomeDataErrorState(this.error);
 }

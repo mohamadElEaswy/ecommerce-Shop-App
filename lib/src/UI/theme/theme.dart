@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 ThemeData lightThemeData = ThemeData(
   scaffoldBackgroundColor: Colors.white,
-  elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black),)),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all(Colors.black),
+    ),
+  ),
   appBarTheme: const AppBarTheme(
     color: Colors.white,
     centerTitle: true,
@@ -14,7 +18,14 @@ ThemeData lightThemeData = ThemeData(
       color: Colors.black,
     ),
   ),
-  // elevatedButtonTheme: const ElevatedButtonThemeData(
-  //   style: ButtonStyle(backgroundColor: MaterialStatePropertyColor<Color?>),
-  // ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    type: BottomNavigationBarType.fixed,
+    elevation: 0.0,
+    showUnselectedLabels: true,
+    showSelectedLabels: true,
+    unselectedItemColor: Colors.black54,selectedItemColor: Colors.black,
+  ),
+);
+ThemeData darkThemeData= ThemeData(
+
 );

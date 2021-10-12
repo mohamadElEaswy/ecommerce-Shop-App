@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/core/models/on_boarding_model.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
+import 'package:shop2/src/data/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 const String img = 'assets/images/boarding_image/canvas.png';
@@ -31,7 +32,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               elevation: MaterialStateProperty.all(0.0),
             ),
             onPressed: () {
-              navigateAndRemove(context: context, newRouteName: '/login',);
+              submit(context:  context);
             },
             child: const Text(
               'SKIP',
@@ -78,11 +79,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                 ),
                 const Spacer(),
-                FloatingActionButton(
+                FloatingActionButton(backgroundColor: defaultColor,
                   child: const Icon(Icons.arrow_forward_ios),
                   onPressed: () {
                     if (isLast) {
-                      navigateAndRemove(context: context, newRouteName: '/login',);
+                      submit(context:  context);
                     } else {
                       pageController.nextPage(
                         duration: const Duration(milliseconds: 700),
@@ -99,6 +100,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       ),
     );
   }
+
 }
 
 class BoardingItem extends StatelessWidget {
@@ -128,3 +130,17 @@ class BoardingItem extends StatelessWidget {
 }
 
 
+// check and navigate from on boarding screen
+//if it's first once to open the app
+
+void submit({required BuildContext context}) {
+  CacheHelper.saveData(key: 'isFirst', value: true).then((value) {
+    if (value) {
+      CacheHelper.getData(key: 'isFirst');
+      navigateAndRemove(
+        context: context,
+        newRouteName: '/login',
+      );
+    }
+  });
+}
