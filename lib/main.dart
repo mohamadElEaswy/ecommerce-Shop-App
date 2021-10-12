@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:flutter/material.dart';
-import 'package:shop2/src/config/routs/app_routs.dart';
-=======
 import 'package:shop2/bloc_observer.dart';
 import 'package:shop2/src/UI/theme/theme.dart';
 import 'package:shop2/src/config/end_points.dart';
@@ -12,7 +8,6 @@ import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
 import 'package:shop2/src/data/local/cache_helper.dart';
 import 'package:shop2/src/data/remote/dio_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
->>>>>>> 53259dfefd2c9ffe448a88fabc30c166979518d1
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,12 +60,6 @@ class MyApp extends StatelessWidget {
           );
         },
       ),
-<<<<<<< HEAD
-      onGenerateRoute: AppRoutes.onGenerateRoutes,
-      initialRoute: '/',
-      // home: const MyHomePage(),
-=======
->>>>>>> 53259dfefd2c9ffe448a88fabc30c166979518d1
     );
   }
 }
