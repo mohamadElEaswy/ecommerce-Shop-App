@@ -46,7 +46,7 @@ class DioHelper {
     required String url,
     required Map<String, dynamic> data,
     String lang = 'en',
-    required String token,
+    required String? token,
   }) async {
     dio!.options.headers = {
       'Content-Type': 'application/json',

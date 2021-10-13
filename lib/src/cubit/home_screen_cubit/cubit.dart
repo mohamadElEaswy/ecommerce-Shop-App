@@ -4,6 +4,7 @@ import 'package:shop2/src/UI/screens/home/favorite/favorite.dart';
 import 'package:shop2/src/UI/screens/home/home_screen.dart';
 import 'package:shop2/src/UI/screens/home/setting/setting.dart';
 import 'package:shop2/src/config/end_points.dart';
+import 'package:shop2/src/core/models/home_model.dart';
 import 'package:shop2/src/core/models/user_model.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
 import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
@@ -46,17 +47,19 @@ class ShopCubit extends Cubit<ShopState> {
     currentIndex = index;
     emit(ChangeBottomNavigationState());
   }
+
   //end bottom navigation bar
   //password visibility!!?
   bool isPassword = true;
   IconData passwordIcon = Icons.visibility;
 
-  void changePassword(){
+  void changePassword() {
     isPassword != isPassword;
-    isPassword ? passwordIcon = Icons.visibility_off : passwordIcon = Icons.visibility;
+    isPassword
+        ? passwordIcon = Icons.visibility_off
+        : passwordIcon = Icons.visibility;
     emit(ChangePasswordVisibilityState());
   }
-
 
   //login methods
   late UserModel userModel;
@@ -107,7 +110,64 @@ class ShopCubit extends Cubit<ShopState> {
         context: context,
         newRouteName: '/home',
       );
-      emit(RegisterSuccessState());
-    }).catchError((e) {RegisterErrorState(e);});
+      emit(RegisterSuccessState(userModel));
+    }).catchError((e) {
+      RegisterErrorState(e.toString());
+    });
   }
+
+  HomeModel? homeModel;
+  void getHomeData() {
+    DioHelper.get(url: home, token: token).then((value) {
+      emit(HomeDataLoadingState());
+      homeModel = HomeModel.fromJson(value.data);
+
+      emit(HomeDataSuccessState(homeModel!));
+    }).catchError((e) {
+      emit(HomeDataErrorState(e.toString()));
+    });
+  }
+
+
+
+
+  //get user data (SETTINGS DATA)
+  void getSettings() {
+    DioHelper.get(url: profile, token: token).then((value) {
+      emit(SettingsLoadingState());
+      userModel = UserModel.fromJson(value.data);
+      emit(SettingsSuccessState(userModel));
+    }).catchError((e) {
+      emit(SettingsErrorState(e.toString()));
+    });
+  }
+
+//edit user data ((SETTINGS))
+  void userUpdate({
+    required String email,
+    // required String password,
+    required String phone,
+    required String name,
+    required BuildContext context,
+  }) {
+    DioHelper.put(url: update, token: token, data: {
+      'email': email,
+      // 'password': password,
+      'name': name,
+      'phone': phone,
+    }).then((value) {
+      emit(UpdateLoadingState());
+      userModel = UserModel.fromJson(value.data);
+      CacheHelper.saveData(key: 'token', value: userModel.userData!.token);
+      token = CacheHelper.getData(key: 'token');
+      navigateAndRemove(
+        context: context,
+        newRouteName: '/home',
+      );
+      emit(UpdateSuccessState(userModel));
+    }).catchError((e) {
+      UpdateErrorState(e.toString());
+    });
+  }
+
 }

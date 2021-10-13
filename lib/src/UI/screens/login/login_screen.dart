@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/UI/widgets/default_text_form_widget.dart';
-import 'package:shop2/src/UI/widgets/defualt_form_button.dart';
+import 'package:shop2/src/UI/widgets/default_form_button.dart';
 import 'package:shop2/src/UI/widgets/toast.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
 import 'package:shop2/src/cubit/home_screen_cubit/cubit.dart';
@@ -43,7 +44,7 @@ class _LogInScreenState extends State<LogInScreen> {
           appBar: AppBar(),
           body: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(spacerHeight),
               physics: const BouncingScrollPhysics(),
               child: Form(
                 key: formKey,
@@ -54,7 +55,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       style: Theme.of(context).textTheme.headline3,
                     ),
                     const Text('welcome Back again...'),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: spacerHeight),
                     DefaultTextFormField(
                       obscureText: false,
                       keyboardType: TextInputType.emailAddress,
@@ -67,7 +68,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       hintText: 'email',
                       prefixIcon: Icons.email,
                     ),
-                    const SizedBox(height: 10.0),
+                    const SizedBox(height: spacerHeight),
                     DefaultTextFormField(
                       obscureText: false,
                       keyboardType: TextInputType.number,
@@ -80,10 +81,10 @@ class _LogInScreenState extends State<LogInScreen> {
                       hintText: 'password',
                       prefixIcon: Icons.password,
                     ),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: spacerHeight),
                     SizedBox(
                       width: double.infinity,
-                      height: 50.0,
+                      height: btnHeight,
                       child: DefaultFormButton(
                         text: 'LogIn'.toUpperCase(),
                         onPressed: () {
@@ -97,12 +98,12 @@ class _LogInScreenState extends State<LogInScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 10.0),
+                    const SizedBox(height: spacerHeight),
                     const Center(child: Text('or')),
-                    const SizedBox(height: 10.0),
+                    const SizedBox(height: spacerHeight),
                     SizedBox(
                       width: double.infinity,
-                      height: 50.0,
+                      height: btnHeight,
                       child: DefaultFormButton(
                         text: 'register'.toUpperCase(),
                         onPressed: () {

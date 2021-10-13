@@ -5,7 +5,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('CartScreen'),
+    return Center(child: Text('CartScreen',style: Theme.of(context).textTheme.bodyText1,),
     );
   }
 }

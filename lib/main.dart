@@ -43,7 +43,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ShopCubit>(
-          create: (BuildContext context) => ShopCubit(),
+          create: (BuildContext context) => ShopCubit()..getHomeData()
+            ..getSettings()
+          ,
         ),
       ],
       child: BlocConsumer<ShopCubit, ShopState>(
@@ -53,8 +55,8 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Flutter Training',
             theme: lightThemeData,
-            darkTheme: darkThemeData,
-            themeMode: ThemeMode.system,
+            // darkTheme: darkThemeData,
+            // themeMode: ThemeMode.system,
             initialRoute: initRoute,
             onGenerateRoute: AppRoute.generateRoutes,
           );
