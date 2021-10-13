@@ -14,11 +14,6 @@ class LoginErrorShopState extends ShopState {
   LoginErrorShopState(this.error);
 }
 
-class ChangeBottomNavigationState extends ShopState {}
-
-class ChangePasswordVisibilityState extends ShopState {}
-
-
 class LoginLoadingState extends ShopState {}
 
 class LoginSuccessState extends ShopState {
@@ -41,14 +36,4 @@ class RegisterErrorState extends ShopState {
   final String error;
 
   RegisterErrorState(this.error);
-}
-
-class HomeDataLoadingState extends ShopState {}
-
-class HomeDataSuccessState extends ShopState {}
-
-class HomeDataErrorState extends ShopState {
-  final String error;
-
-  HomeDataErrorState(this.error);
 }

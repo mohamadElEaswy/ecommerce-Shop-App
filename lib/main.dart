@@ -8,6 +8,7 @@ import 'package:shop2/src/config/end_points.dart';
 import 'package:shop2/src/core/route/routes.dart';
 import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
 import 'package:shop2/src/cubit/auth_cubit/state.dart';
+import 'package:shop2/src/cubit/home_cubit/cubit.dart';
 import 'package:shop2/src/data/local/cache_helper.dart';
 import 'package:shop2/src/data/remote/dio_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,10 +47,12 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ShopCubit>(
-          create: (BuildContext context) => ShopCubit()
-            // ..getHomeData()
-            // ..getSettings()
-          ,
+          create: (BuildContext context) => ShopCubit(),
+        ),
+        BlocProvider<HomeCubit>(
+          create: (BuildContext context) => HomeCubit()
+            ..getHomeData()
+            ..getSettingsData(),
         ),
       ],
       child: BlocConsumer<ShopCubit, ShopState>(
