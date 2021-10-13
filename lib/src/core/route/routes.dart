@@ -7,27 +7,26 @@ import 'package:shop2/src/UI/screens/login/login_screen.dart';
 import 'package:shop2/src/UI/screens/on_boarding/on_boarding_screen.dart';
 import 'package:shop2/src/UI/screens/register/register_screen.dart';
 
-
 class AppRoute {
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case '/':
+      case OnBoardingScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => const OnBoardingScreen(),
         );
 
-        case '/login':
+      case LogInScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => const LogInScreen(),
         );
 
-        case '/register':
+      case RegisterScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => const RegisterScreen(),
         );
 
-        case '/home':
+      case HomeScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => const HomeScreen(),
         );
@@ -36,11 +35,11 @@ class AppRoute {
         return _errorRoute();
     }
   }
-  static Route<dynamic> _errorRoute(){
+
+  static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(builder: (context) => const ErrorScreen());
   }
 }
-
 
 //default error screen
 class ErrorScreen extends StatelessWidget {

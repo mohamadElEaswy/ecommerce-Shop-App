@@ -16,6 +16,8 @@ bool isLast = false;
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
+  static const routeName = '/';
+
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
@@ -32,7 +34,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               elevation: MaterialStateProperty.all(0.0),
             ),
             onPressed: () {
-              submit(context:  context);
+              submit(context: context);
             },
             child: const Text(
               'SKIP',
@@ -79,11 +81,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                 ),
                 const Spacer(),
-                FloatingActionButton(backgroundColor: defaultColor,
+                FloatingActionButton(
+                  backgroundColor: defaultColor,
                   child: const Icon(Icons.arrow_forward_ios),
                   onPressed: () {
                     if (isLast) {
-                      submit(context:  context);
+                      submit(context: context);
                     } else {
                       pageController.nextPage(
                         duration: const Duration(milliseconds: 700),
@@ -100,7 +103,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       ),
     );
   }
-
 }
 
 class BoardingItem extends StatelessWidget {
@@ -128,7 +130,6 @@ class BoardingItem extends StatelessWidget {
     );
   }
 }
-
 
 // check and navigate from on boarding screen
 //if it's first once to open the app
