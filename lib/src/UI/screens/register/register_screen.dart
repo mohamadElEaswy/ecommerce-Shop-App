@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shop2/src/UI/widgets/default_form_button.dart';
 import 'package:shop2/src/UI/widgets/default_text_form_widget.dart';
-import 'package:shop2/src/UI/widgets/defualt_form_button.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 final TextEditingController passwordController = TextEditingController();
@@ -14,7 +14,7 @@ final TextEditingController phoneController = TextEditingController();
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
-
+static const routeName ='/register';
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }

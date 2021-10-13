@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
+  static const routeName = '/home';
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopState>(

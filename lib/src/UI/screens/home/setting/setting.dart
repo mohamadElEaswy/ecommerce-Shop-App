@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/UI/widgets/default_text_form_widget.dart';
 import 'package:shop2/src/UI/widgets/default_form_button.dart';
-import 'package:shop2/src/UI/widgets/toast.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
+// import 'package:shop2/src/UI/widgets/toast.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
-
 
 
   @override
@@ -23,20 +22,20 @@ class SettingScreen extends StatelessWidget {
     var formKey = GlobalKey<FormState>();
     return BlocConsumer<ShopCubit, ShopState>(
         listener: (context, state) {
-      if (state is UpdateErrorState) {
-        defaultToast(
-          msg: ShopCubit.get(context).userModel.message,
-          state: toastStates.error,
-        );
-      }
-      if (state is UpdateSuccessState) {
-        if (state.userModel.status) {
-          defaultToast(
-            msg: ShopCubit.get(context).userModel.message,
-            state: toastStates.success,
-          );
-        }
-      }
+      // if (state is UpdateErrorState) {
+      //   defaultToast(
+      //     msg: ShopCubit.get(context).userModel.message,
+      //     state: toastStates.error,
+      //   );
+      // }
+      // if (state is UpdateSuccessState) {
+      //   if (state.userModel.status) {
+      //     defaultToast(
+      //       msg: ShopCubit.get(context).userModel.message,
+      //       state: toastStates.success,
+      //     );
+      //   }
+      // }
     },
     builder: (context, state) {return ConditionalBuilder(
           condition:
@@ -117,13 +116,13 @@ class SettingScreen extends StatelessWidget {
                       text: 'update'.toUpperCase(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          ShopCubit.get(context).userUpdate(
-                            email: emailController.text,
-                            // password: passwordController.text,
-                            phone: phoneController.text,
-                            name: nameController.text,
-                            context: context,
-                          );
+                          // ShopCubit.get(context).userUpdate(
+                          //   email: emailController.text,
+                          //   // password: passwordController.text,
+                          //   phone: phoneController.text,
+                          //   name: nameController.text,
+                          //   context: context,
+                          // );
                         }
                       },
                     ),

@@ -6,7 +6,7 @@ import 'package:shop2/src/UI/screens/home/setting/setting.dart';
 import 'package:shop2/src/config/end_points.dart';
 import 'package:shop2/src/core/models/user_model.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop2/src/data/local/cache_helper.dart';
 import 'package:shop2/src/data/remote/dio_helper.dart';
