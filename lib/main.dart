@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shop2/bloc_observer.dart';
+import 'package:shop2/src/UI/screens/home/home_screen.dart';
+import 'package:shop2/src/UI/screens/login/login_screen.dart';
+import 'package:shop2/src/UI/screens/on_boarding/on_boarding_screen.dart';
 import 'package:shop2/src/UI/theme/theme.dart';
 import 'package:shop2/src/config/end_points.dart';
 import 'package:shop2/src/core/route/routes.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
 import 'package:shop2/src/data/local/cache_helper.dart';
 import 'package:shop2/src/data/remote/dio_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,12 +26,12 @@ void main() async {
   String? initRoute;
   if (isFirst) {
     if (token!.isNotEmpty) {
-      initRoute = '/home';
+      initRoute = HomeScreen.routeName;
     } else {
-      initRoute = '/login';
+      initRoute = LogInScreen.routeName;
     }
   } else {
-    initRoute = '/';
+    initRoute = OnBoardingScreen.routeName;
   }
 
   runApp(MyApp(initRoute: initRoute));

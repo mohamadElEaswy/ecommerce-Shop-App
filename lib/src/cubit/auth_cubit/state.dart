@@ -1,4 +1,3 @@
-import 'package:shop2/src/core/models/home_model.dart';
 import 'package:shop2/src/core/models/user_model.dart';
 
 abstract class ShopState {}
@@ -19,6 +18,7 @@ class ChangeBottomNavigationState extends ShopState {}
 
 class ChangePasswordVisibilityState extends ShopState {}
 
+
 class LoginLoadingState extends ShopState {}
 
 class LoginSuccessState extends ShopState {
@@ -35,11 +35,7 @@ class LoginErrorState extends ShopState {
 
 class RegisterLoadingState extends ShopState {}
 
-class RegisterSuccessState extends ShopState {
-  final UserModel userModel;
-
-  RegisterSuccessState(this.userModel);
-}
+class RegisterSuccessState extends ShopState {}
 
 class RegisterErrorState extends ShopState {
   final String error;
@@ -49,47 +45,10 @@ class RegisterErrorState extends ShopState {
 
 class HomeDataLoadingState extends ShopState {}
 
-class HomeDataSuccessState extends ShopState {
-  final HomeModel homeModel;
-
-  HomeDataSuccessState(this.homeModel);
-}
+class HomeDataSuccessState extends ShopState {}
 
 class HomeDataErrorState extends ShopState {
   final String error;
 
   HomeDataErrorState(this.error);
 }
-
-
-class UpdateLoadingState extends ShopState {}
-
-class UpdateSuccessState extends ShopState {
-  final UserModel userModel;
-
-  UpdateSuccessState(this.userModel);
-}
-
-class UpdateErrorState extends ShopState {
-  final String error;
-
-  UpdateErrorState(this.error);
-
-
-}
-
-
-class SettingsLoadingState extends ShopState {}
-
-class SettingsSuccessState extends ShopState {
-  final UserModel userModel;
-
-  SettingsSuccessState(this.userModel);
-}
-
-class SettingsErrorState extends ShopState {
-  final String error;
-
-  SettingsErrorState(this.error);
-}
-

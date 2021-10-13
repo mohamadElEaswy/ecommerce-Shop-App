@@ -1,4 +1,4 @@
-# shop2
+# shopApp Test
 
 A new Flutter project.
 

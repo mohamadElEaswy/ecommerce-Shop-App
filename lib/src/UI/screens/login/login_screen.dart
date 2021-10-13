@@ -5,12 +5,13 @@ import 'package:shop2/src/UI/widgets/default_text_form_widget.dart';
 import 'package:shop2/src/UI/widgets/default_form_button.dart';
 import 'package:shop2/src/UI/widgets/toast.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_screen_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
+  static const routeName = '/login';
 
   @override
   State<LogInScreen> createState() => _LogInScreenState();
@@ -48,7 +49,8 @@ class _LogInScreenState extends State<LogInScreen> {
               physics: const BouncingScrollPhysics(),
               child: Form(
                 key: formKey,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'LOG IN',
