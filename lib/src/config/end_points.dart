@@ -6,7 +6,7 @@ const String home = 'home';
 
 const String categories = 'categories';
 
-const String favorites = 'favorites';
+const String favorite = 'favorites';
 
 const String profile = 'profile';
 

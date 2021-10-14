@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-ThemeData lightThemeData = ThemeData(textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.white)),
+ThemeData lightThemeData = ThemeData(
+  // textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.white)),
   scaffoldBackgroundColor: Colors.white,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
@@ -23,10 +24,12 @@ ThemeData lightThemeData = ThemeData(textTheme: const TextTheme(bodyText1: TextS
     elevation: 0.0,
     showUnselectedLabels: true,
     showSelectedLabels: true,
-    unselectedItemColor: Colors.black54,selectedItemColor: Colors.black,
+    unselectedItemColor: Colors.black54,
+    selectedItemColor: Colors.black,
   ),
 );
-ThemeData darkThemeData= ThemeData(
+
+ThemeData darkThemeData = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
@@ -44,7 +47,8 @@ ThemeData darkThemeData= ThemeData(
       color: Colors.black,
     ),
   ),
-  bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: Colors.black54,
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Colors.black54,
     type: BottomNavigationBarType.fixed,
     elevation: 0.0,
     showUnselectedLabels: true,

@@ -1,3 +1,5 @@
+import 'package:shop2/src/core/models/categories_model.dart';
+import 'package:shop2/src/core/models/favourites_model.dart';
 import 'package:shop2/src/core/models/home_model.dart';
 import 'package:shop2/src/core/models/user_model.dart';
 
@@ -49,4 +51,47 @@ class UpdateErrorState extends HomeState {
   final String error;
 
   UpdateErrorState({required this.error});
+}
+
+
+
+class CategoriesLoadingState extends HomeState {}
+
+class CategoriesSuccessState extends HomeState {
+  final CategoriesModel? categoriesModel;
+
+  CategoriesSuccessState({required this.categoriesModel});
+}
+
+class CategoriesErrorState extends HomeState {
+  final String error;
+
+  CategoriesErrorState({required this.error});
+}
+
+class ChangeLoadingSuccessState extends HomeState {}
+
+class ChangeFavoriteSuccessState extends HomeState {
+  final ChangeFavouritesModel? changeFavouritesModel;
+
+  ChangeFavoriteSuccessState({required this.changeFavouritesModel});
+}
+
+class ChangeFavoritesErrorState extends HomeState {
+  final String error;
+
+  ChangeFavoritesErrorState({required this.error});
+}
+
+
+class GetFavoritesLoadingState extends HomeState{}
+class FavoritesSuccessState extends HomeState{
+  final FavouriteModel? favouriteModel;
+
+  FavoritesSuccessState({required this.favouriteModel});
+}
+class FavoritesErrorState extends HomeState{
+  final String error;
+
+  FavoritesErrorState({required this.error});
 }

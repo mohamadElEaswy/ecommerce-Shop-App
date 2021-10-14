@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+
 class DioHelper {
   static Dio? dio;
 
@@ -32,7 +33,7 @@ class DioHelper {
     required String url,
     required Map<String, dynamic> data,
     String lang = 'en',
-    String token = '',
+    String? token = '',
   }) async {
     dio!.options.headers = {
       'Content-Type': 'application/json',
@@ -55,4 +56,6 @@ class DioHelper {
     };
     return dio!.put(url, data: data);
   }
+
+
 }

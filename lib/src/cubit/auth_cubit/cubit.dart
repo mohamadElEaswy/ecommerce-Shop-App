@@ -51,7 +51,7 @@ class ShopCubit extends Cubit<ShopState> {
       'password': password,
       'name': name,
       'phone': phone,
-    }).then((value) {
+    }, ).then((value) {
       emit(RegisterLoadingState());
       userModel = UserModel.fromJson(value.data);
       CacheHelper.saveData(key: 'token', value: userModel.userData!.token);
