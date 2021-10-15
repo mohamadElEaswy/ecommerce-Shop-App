@@ -1,16 +1,12 @@
 import 'package:dio/dio.dart';
 
-
 class DioHelper {
   static Dio? dio;
 
   static init() {
-    dio = Dio(
-      BaseOptions(
+    dio = Dio(BaseOptions(
         baseUrl: 'https://student.valuxapps.com/api/',
-        receiveDataWhenStatusError: true,
-      ),
-    );
+        receiveDataWhenStatusError: true));
   }
 
   static Future<Response> get({
@@ -56,6 +52,4 @@ class DioHelper {
     };
     return dio!.put(url, data: data);
   }
-
-
 }

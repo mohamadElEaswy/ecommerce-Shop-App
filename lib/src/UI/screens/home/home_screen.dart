@@ -41,7 +41,8 @@ class Home extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: HomeCubit.get(context).homeModel != null && HomeCubit.get(context).categoriesModel != null,
+          condition: HomeCubit.get(context).homeModel != null &&
+              HomeCubit.get(context).categoriesModel != null,
           fallback: (context) => const Center(
             child: CircularProgressIndicator(),
           ),
@@ -79,19 +80,21 @@ class HomeBodyBuilder extends StatelessWidget {
               scrollDirection: Axis.horizontal,
             ),
           ),
-           SizedBox(
+          SizedBox(
             height: 100.0,
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) =>
-                  BuildCategoriesHomeItem(categoriesData: cubit.categoriesModel!.data!.data[index],),
+              itemBuilder: (context, index) => BuildCategoriesHomeItem(
+                categoriesData: cubit.categoriesModel!.data!.data[index],
+              ),
               separatorBuilder: (context, index) => const SizedBox(
                 width: 1.0,
               ),
               itemCount: cubit.categoriesModel!.data!.data.length,
             ),
-          ),const SizedBox(height: 10.0),
+          ),
+          const SizedBox(height: 10.0),
           GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
@@ -99,16 +102,23 @@ class HomeBodyBuilder extends StatelessWidget {
             crossAxisSpacing: 1.0,
             childAspectRatio: 1 / 1.8,
             physics: const NeverScrollableScrollPhysics(),
-            children: List.generate(cubit.homeModel!.data.products.length,
-                    (index) => GridItem(cubit: cubit, index: index,),
-          ),),
+            children: List.generate(
+              cubit.homeModel!.data.products.length,
+              (index) => GridItem(
+                cubit: cubit,
+                index: index,
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
 class BuildCategoriesHomeItem extends StatelessWidget {
-  const BuildCategoriesHomeItem({Key? key, required this.categoriesData}) : super(key: key);
+  const BuildCategoriesHomeItem({Key? key, required this.categoriesData})
+      : super(key: key);
   final DataModel categoriesData;
   @override
   Widget build(BuildContext context) {
@@ -140,10 +150,12 @@ class BuildCategoriesHomeItem extends StatelessWidget {
     );
   }
 }
+
 class GridItem extends StatelessWidget {
-  const GridItem({Key? key, required this.cubit, required this.index}) : super(key: key);
-final HomeCubit cubit;
-final int index;
+  const GridItem({Key? key, required this.cubit, required this.index})
+      : super(key: key);
+  final HomeCubit cubit;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -153,10 +165,28 @@ final int index;
           Stack(
             alignment: Alignment.bottomLeft,
             children: [
+              //favourite button
+              IconButton(
+                onPressed: () {
+                  cubit.changeFavourites(
+                      productId: cubit.homeModel!.data.products[index].id);
+                },
+                icon: CircleAvatar(
+                  child: const Icon(
+                    Icons.favorite_border,
+                    color: Colors.white,
+                  ),
+                  backgroundColor: (cubit.favorites[
+                              cubit.homeModel!.data.products[index].id] ==
+                          true)
+                      ? activeColor
+                      : Colors.grey[400],
+                ),
+              ),
               Image(
                 height: 200.0,
                 image: NetworkImage(
-                    cubit.homeModel!.data.products[index].image,
+                  cubit.homeModel!.data.products[index].image,
                 ),
               ),
               if (cubit.homeModel!.data.products[index].discount != 0)
@@ -178,39 +208,33 @@ final int index;
           Row(
             children: [
               Column(
-                children: [Text(
-                  "\$" + cubit.homeModel!.data.products[index].price.toString(),
-                  style: const TextStyle(fontSize: 12.0,color: activeColor),
-                ),
-                  const SizedBox(
-                      height: 5.0
+                children: [
+                  Text(
+                    "price:\$" +
+                        cubit.homeModel!.data.products[index].price.toString(),
+                    style: const TextStyle(fontSize: 12.0, color: activeColor),
                   ),
+                  const SizedBox(height: 5.0),
                   if (cubit.homeModel!.data.products[index].discount != 0)
                     Text(
-                      "\$" + cubit.homeModel!.data.products[index].oldPrice.toString(),
+                      "\$" +
+                          cubit.homeModel!.data.products[index].oldPrice
+                              .toString(),
                       style: TextStyle(
                           fontSize: 12.0,
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey[400]),
-                    ),],
+                    ),
+                ],
               ),
               const Spacer(),
-              IconButton(
-                onPressed: (){
-                  cubit.changeFavourites(productId:cubit.homeModel!.data.products[index].id);
-                },
-                icon: CircleAvatar(
-                  child: const Icon(
-                    Icons.favorite_border,color: Colors.white,
-                  ),
-                  backgroundColor: (cubit.favorites[cubit.homeModel!.data.products[index].id] == true) ? activeColor : Colors.grey[400],
-                ),
-              ),
               IconButton(
                 onPressed: () {},
                 icon: CircleAvatar(
                   child: const Icon(
-                    Icons.add_shopping_cart,color: Colors.white,size: 22.0,
+                    Icons.add_shopping_cart,
+                    color: Colors.white,
+                    size: 22.0,
                   ),
                   backgroundColor: Colors.grey[400],
                 ),

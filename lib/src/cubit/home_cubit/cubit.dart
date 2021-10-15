@@ -67,10 +67,12 @@ class HomeCubit extends Cubit<HomeState> {
         : passwordIcon = Icons.visibility;
     emit(ChangePasswordVisibilityState());
   }
+
 //get home products data
+//with pagination
   HomeModel? homeModel;
   void getHomeData() {
-    emit(HomeLoadingState());
+    emit(HomeLoadingState(homeModel: homeModel));
     DioHelper.get(url: home, token: token).then((value) {
       homeModel = HomeModel.fromJson(value.data);
       homeModel!.data.products.forEach((element) {
@@ -85,6 +87,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeErrorState(error: e.toString()));
     });
   }
+
 //get settings data
   UserModel? userModel;
   void getSettingsData() {
@@ -99,6 +102,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(SettingsErrorState(error: e.toString()));
     });
   }
+
 //change settings data
   void updateSettingsData(
       {required String name, required String email, required String phone}) {
@@ -113,6 +117,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(UpdateErrorState(error: e.toString()));
     });
   }
+
 // get categories data
   CategoriesModel? categoriesModel;
   late Map<int, bool?> favorites = {};
@@ -131,13 +136,13 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
-
   //change favourites
   ChangeFavouritesModel? changeFavouritesModel;
   void changeFavourites({required int productId}) async {
     emit(ChangeLoadingSuccessState());
     favorites[productId] = !favorites[productId]!;
-    emit(ChangeFavoriteSuccessState(changeFavouritesModel: changeFavouritesModel));
+    emit(ChangeFavoriteSuccessState(
+        changeFavouritesModel: changeFavouritesModel));
     DioHelper.post(
       url: favorite,
       data: {
@@ -160,6 +165,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(ChangeFavoritesErrorState(error: e.toString()));
     });
   }
+
 //get favourites data
   FavouriteModel? favouriteModel;
   void getFavouritesData() {
@@ -174,5 +180,4 @@ class HomeCubit extends Cubit<HomeState> {
       emit(FavoritesErrorState(error: error.toString()));
     });
   }
-
 }

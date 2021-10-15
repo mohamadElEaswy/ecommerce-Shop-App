@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// initialize light theme data
 ThemeData lightThemeData = ThemeData(
   // textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.white)),
   scaffoldBackgroundColor: Colors.white,
@@ -8,6 +9,7 @@ ThemeData lightThemeData = ThemeData(
       backgroundColor: MaterialStateProperty.all(Colors.black),
     ),
   ),
+  //appBar theme data style
   appBarTheme: const AppBarTheme(
     color: Colors.white,
     centerTitle: true,
@@ -19,6 +21,7 @@ ThemeData lightThemeData = ThemeData(
       color: Colors.black,
     ),
   ),
+  //bottom navigation bar theme data styke
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     elevation: 0.0,
@@ -29,6 +32,7 @@ ThemeData lightThemeData = ThemeData(
   ),
 );
 
+// initialize dark theme data
 ThemeData darkThemeData = ThemeData(
   scaffoldBackgroundColor: Colors.black,
   elevatedButtonTheme: ElevatedButtonThemeData(

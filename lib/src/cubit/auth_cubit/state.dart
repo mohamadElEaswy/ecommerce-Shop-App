@@ -1,9 +1,12 @@
 import 'package:shop2/src/core/models/user_model.dart';
 
+//before login states
+//auth states login, register , re open the app after login or register
 abstract class ShopState {}
 
 class InitialShopState extends ShopState {}
 
+//login states
 class LoadingShopState extends ShopState {}
 
 class LoginShopState extends ShopState {}
@@ -27,6 +30,7 @@ class LoginErrorState extends ShopState {
 
   LoginErrorState(this.error);
 }
+//register states
 
 class RegisterLoadingState extends ShopState {}
 
