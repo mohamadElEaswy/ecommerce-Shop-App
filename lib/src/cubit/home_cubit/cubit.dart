@@ -67,18 +67,25 @@ class HomeCubit extends Cubit<HomeState> {
         : passwordIcon = Icons.visibility;
     emit(ChangePasswordVisibilityState());
   }
-
+//get home products data
   HomeModel? homeModel;
   void getHomeData() {
     emit(HomeLoadingState());
     DioHelper.get(url: home, token: token).then((value) {
       homeModel = HomeModel.fromJson(value.data);
+      homeModel!.data.products.forEach((element) {
+        favorites.addAll(
+          {
+            element.id: element.inFavorites,
+          },
+        );
+      });
       emit(HomeSuccessState(homeModel: homeModel));
     }).catchError((e) {
       emit(HomeErrorState(error: e.toString()));
     });
   }
-
+//get settings data
   UserModel? userModel;
   void getSettingsData() {
     emit(SettingsLoadingState());
@@ -92,7 +99,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(SettingsErrorState(error: e.toString()));
     });
   }
-
+//change settings data
   void updateSettingsData(
       {required String name, required String email, required String phone}) {
     emit(UpdateLoadingState());
@@ -106,7 +113,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(UpdateErrorState(error: e.toString()));
     });
   }
-
+// get categories data
   CategoriesModel? categoriesModel;
   late Map<int, bool?> favorites = {};
 
@@ -117,23 +124,17 @@ class HomeCubit extends Cubit<HomeState> {
       url: categories,
     ).then((value) {
       categoriesModel = CategoriesModel.fromJson(value.data);
-      homeModel!.data.products.forEach((element) {
-        favorites.addAll(
-          {
-            element.id: element.inFavorites,
-          },
-        );
-      });
+
       emit(CategoriesSuccessState(categoriesModel: categoriesModel));
     }).catchError((error) {
-      print(error.toString());
       emit(CategoriesErrorState(error: error.toString()));
     });
   }
 
-  ChangeFavouritesModel? changeFavouritesModel;
 
-  void changeFavourites(int productId) async {
+  //change favourites
+  ChangeFavouritesModel? changeFavouritesModel;
+  void changeFavourites({required int productId}) async {
     emit(ChangeLoadingSuccessState());
     favorites[productId] = !favorites[productId]!;
     emit(ChangeFavoriteSuccessState(changeFavouritesModel: changeFavouritesModel));
@@ -159,9 +160,8 @@ class HomeCubit extends Cubit<HomeState> {
       emit(ChangeFavoritesErrorState(error: e.toString()));
     });
   }
-
+//get favourites data
   FavouriteModel? favouriteModel;
-
   void getFavouritesData() {
     emit(GetFavoritesLoadingState());
     DioHelper.get(
@@ -174,4 +174,5 @@ class HomeCubit extends Cubit<HomeState> {
       emit(FavoritesErrorState(error: error.toString()));
     });
   }
+
 }

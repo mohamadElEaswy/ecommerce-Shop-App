@@ -177,47 +177,42 @@ final int index;
           ),
           Row(
             children: [
-              Text(
-                '${cubit.homeModel!.data.products[index].price.round()}',
-                style: const TextStyle(fontSize: 12.0,color: defaultColor),
-              ),
-              const SizedBox(
-                width: 10.0
-              ),
-              if (cubit.homeModel!.data.products[index].discount != 0)
-                Text(
-                  '${cubit.homeModel!.data.products[index].oldPrice.round()}',
-                  style: TextStyle(
-                      fontSize: 12.0,
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.grey[400]),
+              Column(
+                children: [Text(
+                  "\$" + cubit.homeModel!.data.products[index].price.toString(),
+                  style: const TextStyle(fontSize: 12.0,color: activeColor),
                 ),
+                  const SizedBox(
+                      height: 5.0
+                  ),
+                  if (cubit.homeModel!.data.products[index].discount != 0)
+                    Text(
+                      "\$" + cubit.homeModel!.data.products[index].oldPrice.toString(),
+                      style: TextStyle(
+                          fontSize: 12.0,
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.grey[400]),
+                    ),],
+              ),
               const Spacer(),
               IconButton(
-                onPressed: () async{
-                  cubit.changeFavourites(cubit.homeModel!.data.products[index].id);
+                onPressed: (){
+                  cubit.changeFavourites(productId:cubit.homeModel!.data.products[index].id);
                 },
                 icon: CircleAvatar(
                   child: const Icon(
                     Icons.favorite_border,color: Colors.white,
                   ),
-                  backgroundColor: (cubit.favorites[cubit.homeModel!.data.products[index].id] == true) ? defaultColor : Colors.grey[400],
+                  backgroundColor: (cubit.favorites[cubit.homeModel!.data.products[index].id] == true) ? activeColor : Colors.grey[400],
                 ),
               ),
               IconButton(
-                onPressed: ()
-                // async
-                {
-                  // cubit.changeFavourites(cubit.homeModel!.data.products[index].id);
-                },
+                onPressed: () {},
                 icon: CircleAvatar(
                   child: const Icon(
                     Icons.add_shopping_cart,color: Colors.white,size: 22.0,
                   ),
-                  backgroundColor:
-                  (
-                      // cubit.favorites[cubit.homeModel!.data.products[index].id] ==
-                          true) ? defaultColor : Colors.grey[400],
+                  backgroundColor: Colors.grey[400],
                 ),
               ),
             ],
