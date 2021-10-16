@@ -1,35 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:shop2/src/UI/Style/consts.dart';
 
 // initialize light theme data
 ThemeData lightThemeData = ThemeData(
   // textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.white)),
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Colors.grey[100],
+  primarySwatch: customColor,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(Colors.black),
+      backgroundColor: MaterialStateProperty.all(defaultColor),
     ),
   ),
   //appBar theme data style
   appBarTheme: const AppBarTheme(
-    color: Colors.white,
+    color: barsColor,
     centerTitle: true,
     elevation: 0.0,
     iconTheme: IconThemeData(
-      color: Colors.black,
+      color: defaultColor,
     ),
     actionsIconTheme: IconThemeData(
-      color: Colors.black,
+      color: defaultColor,
     ),
   ),
-  //bottom navigation bar theme data styke
+  //bottom navigation bar theme data style
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     elevation: 0.0,
     showUnselectedLabels: true,
     showSelectedLabels: true,
+    backgroundColor: barsColor,
     unselectedItemColor: Colors.black54,
-    selectedItemColor: Colors.black,
+    selectedItemColor: defaultColor,
   ),
+
 );
 
 // initialize dark theme data

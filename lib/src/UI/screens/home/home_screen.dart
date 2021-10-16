@@ -53,6 +53,7 @@ class Home extends StatelessWidget {
   }
 }
 
+//home body
 class HomeBodyBuilder extends StatelessWidget {
   const HomeBodyBuilder({Key? key, required this.cubit}) : super(key: key);
   final HomeCubit cubit;
@@ -62,53 +63,114 @@ class HomeBodyBuilder extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          CarouselSlider(
-            items: cubit.homeModel!.data.banners
-                .map((e) => Image(
-                      image: NetworkImage(e.image),
-                    ))
-                .toList(),
-            options: CarouselOptions(
-              viewportFraction: 1.0,
-              autoPlay: true,
-              autoPlayAnimationDuration: const Duration(seconds: 1),
-              autoPlayInterval: const Duration(seconds: 3),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              height: 250.0,
-              initialPage: 0,
-              reverse: false,
-              scrollDirection: Axis.horizontal,
+          //home Slider
+          Container(
+            color: Colors.white,
+            child: CarouselSlider(
+              items: cubit.homeModel!.data.banners
+                  .map((e) => Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Image(
+                          image: NetworkImage(e.image),
+                        ),
+                      ))
+                  .toList(),
+              options: CarouselOptions(
+                viewportFraction: .9,
+                pageSnapping: true,
+                aspectRatio: 0.6,
+                autoPlay: true,
+                autoPlayAnimationDuration: const Duration(seconds: 1),
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                height: 200.0,
+                initialPage: 0,
+                reverse: false,
+                scrollDirection: Axis.horizontal,
+              ),
             ),
           ),
-          SizedBox(
-            height: 100.0,
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => BuildCategoriesHomeItem(
-                categoriesData: cubit.categoriesModel!.data!.data[index],
+          const SizedBox(height: 5.0),
+          //categories section
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(4.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'categories',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    const Spacer(),
+                    ElevatedButton(
+                      child: const Text('view all'),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
-              separatorBuilder: (context, index) => const SizedBox(
-                width: 1.0,
+              const SizedBox(height: 5.0),
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(4.0),
+                height: 100.0,
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => BuildCategoriesHomeItem(
+                    categoriesData: cubit.categoriesModel!.data!.data[index],
+                  ),
+                    separatorBuilder: (context, index) => VerticalDivider(
+                    width: 4.0,
+                      color: Colors.grey[200],
+                  ),
+                  itemCount: cubit.categoriesModel!.data!.data.length,
+                ),
               ),
-              itemCount: cubit.categoriesModel!.data!.data.length,
-            ),
+            ],
           ),
-          const SizedBox(height: 10.0),
-          GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            mainAxisSpacing: 1.0,
-            crossAxisSpacing: 1.0,
-            childAspectRatio: 1 / 1.8,
-            physics: const NeverScrollableScrollPhysics(),
-            children: List.generate(
-              cubit.homeModel!.data.products.length,
-              (index) => GridItem(
-                cubit: cubit,
-                index: index,
+          //products section
+          const SizedBox(height: 5.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(4.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'products',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    const Spacer(),
+                    ElevatedButton(
+                      child: const Text('view all'),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
-            ),
+              const SizedBox(height: 2),
+              GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                mainAxisSpacing: 1.0,
+                crossAxisSpacing: 1.0,
+                childAspectRatio: 1 / 1.5,
+                physics: const NeverScrollableScrollPhysics(),
+                children: List.generate(
+                  cubit.homeModel!.data.products.length,
+                  (index) => GridItem(
+                    cubit: cubit,
+                    index: index,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -116,6 +178,7 @@ class HomeBodyBuilder extends StatelessWidget {
   }
 }
 
+//categories at home screen
 class BuildCategoriesHomeItem extends StatelessWidget {
   const BuildCategoriesHomeItem({Key? key, required this.categoriesData})
       : super(key: key);
@@ -123,7 +186,7 @@ class BuildCategoriesHomeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(4.0),
       height: 100.0,
       width: 100.0,
       child: Stack(
@@ -151,6 +214,7 @@ class BuildCategoriesHomeItem extends StatelessWidget {
   }
 }
 
+//products items on home GRID
 class GridItem extends StatelessWidget {
   const GridItem({Key? key, required this.cubit, required this.index})
       : super(key: key);
@@ -158,67 +222,75 @@ class GridItem extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.all(2.0),
+      margin: const EdgeInsets.all(2.0),
       child: Column(
         children: [
           Stack(
             alignment: Alignment.bottomLeft,
             children: [
-              //favourite button
-              IconButton(
-                onPressed: () {
-                  cubit.changeFavourites(
-                      productId: cubit.homeModel!.data.products[index].id);
-                },
-                icon: CircleAvatar(
-                  child: const Icon(
-                    Icons.favorite_border,
-                    color: Colors.white,
-                  ),
-                  backgroundColor: (cubit.favorites[
-                              cubit.homeModel!.data.products[index].id] ==
-                          true)
-                      ? activeColor
-                      : Colors.grey[400],
-                ),
-              ),
               Image(
                 height: 200.0,
                 image: NetworkImage(
                   cubit.homeModel!.data.products[index].image,
                 ),
               ),
-              if (cubit.homeModel!.data.products[index].discount != 0)
-                Container(
-                  color: Colors.red,
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: const Text(
-                    'DISCOUNT',
-                    style: TextStyle(color: Colors.white, fontSize: 12.0),
+              Row(
+                children: [
+                  if (cubit.homeModel!.data.products[index].discount != 0)
+                    Container(
+                      color: likeColor,
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: const Text(
+                        'DISCOUNT',
+                        style: TextStyle(color: Colors.white, fontSize: 12.0),
+                      ),
+                    ),
+                  const Spacer(),
+                  //favourite button
+                  IconButton(
+                    onPressed: () {
+                      cubit.changeFavourites(
+                          productId: cubit.homeModel!.data.products[index].id);
+                    },
+                    icon: CircleAvatar(
+                      child: const Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: (cubit.favorites[
+                                  cubit.homeModel!.data.products[index].id] ==
+                              true)
+                          ? likeColor
+                          : Colors.grey[400],
+                    ),
                   ),
-                ),
+                ],
+              ),
             ],
           ),
           Text(
             cubit.homeModel!.data.products[index].name,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Row(
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "price:\$" +
                         cubit.homeModel!.data.products[index].price.toString(),
-                    style: const TextStyle(fontSize: 12.0, color: activeColor),
+                    style: const TextStyle(fontSize: 12.0, color: defaultColor),
                   ),
                   const SizedBox(height: 5.0),
                   if (cubit.homeModel!.data.products[index].discount != 0)
                     Text(
-                      "\$" +
-                          cubit.homeModel!.data.products[index].oldPrice
+                      "old price:\$" +
+                          '${cubit.homeModel!.data.products[index].oldPrice.round()}'
                               .toString(),
                       style: TextStyle(
                           fontSize: 12.0,
@@ -228,17 +300,46 @@ class GridItem extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: CircleAvatar(
-                  child: const Icon(
-                    Icons.add_shopping_cart,
-                    color: Colors.white,
-                    size: 22.0,
-                  ),
-                  backgroundColor: Colors.grey[400],
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0.0,
+                  // fixedSize: const Size(60.0, 0.0),
+                  minimumSize: const Size(60.0, 30.0),
+                  maximumSize: const Size(75.0, 30.0),
+                  padding: const EdgeInsets.all(0.0),
+                ),
+                onPressed: () {
+                  // cubit.changeFavourites(
+                  //     productId: cubit.homeModel!.data.products[index].id);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment:CrossAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.add_shopping_cart,
+                      color: Colors.white,
+                      size: 12.0,
+                    ),
+                    Text(
+                      'Add to cart',
+                      style: TextStyle(color: Colors.white, fontSize: 10.0),
+                    ),
+                  ],
                 ),
               ),
+              // ),
+              // IconButton(
+              //   onPressed: () {},
+              //   icon: CircleAvatar(
+              //     child: const Icon(
+              //       Icons.add_shopping_cart,
+              //       color: Colors.white,
+              //       size: 22.0,
+              //     ),
+              //     backgroundColor: Colors.grey[400],
+              //   ),
+              // ),
             ],
           ),
         ],

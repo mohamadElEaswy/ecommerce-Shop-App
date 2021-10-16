@@ -25,8 +25,8 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return Scaffold(backgroundColor: Colors.white,
+      appBar: AppBar(backgroundColor: Colors.white,
         actions: [
           ElevatedButton(
             style: ButtonStyle(
@@ -38,7 +38,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             },
             child: const Text(
               'SKIP',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: defaultColor),
             ),
           ),
         ],

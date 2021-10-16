@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shop2/src/UI/Style/consts.dart';
 
 class DefaultTextFormField extends StatelessWidget {
-   const DefaultTextFormField({
+  const DefaultTextFormField({
     Key? key,
     required this.controller,
     required this.keyboardType,
@@ -28,11 +29,15 @@ class DefaultTextFormField extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
-        fillColor: Colors.black,
+        fillColor: defaultColor,
         suffixIcon: Icon(suffixIcon),
         prefixIcon: Icon(prefixIcon),
-         border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.0))),
+        // enabledBorder: const OutlineInputBorder(
+        //     borderSide: BorderSide(color: defaultColor)),
+        border: const OutlineInputBorder(borderSide: BorderSide(color: defaultColor),
+            borderRadius: BorderRadius.all(
+          Radius.circular(8.0),
+        ),),
       ),
     );
   }
