@@ -86,6 +86,24 @@ class CategoriesErrorState extends HomeState {
 //change favourites states
 class ChangeLoadingSuccessState extends HomeState {}
 
+class CategoriesDetailsLoadingState extends HomeState {}
+
+class CategoriesDetailsSuccessState extends HomeState {
+  final CategoriesModel? categoriesModel;
+
+  CategoriesDetailsSuccessState({required this.categoriesModel});
+}
+
+class CategoriesDetailsErrorState extends HomeState {
+  final String error;
+
+  CategoriesDetailsErrorState({required this.error});
+}
+//end categories states
+
+//change favourites states
+// class ChangeLoadingSuccessState extends HomeState {}
+
 class ChangeFavoriteSuccessState extends HomeState {
   final ChangeFavouritesModel? changeFavouritesModel;
 

@@ -68,6 +68,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(ChangePasswordVisibilityState());
   }
 
+//TODO Don't forget the pagination
 //get home products data
 //with pagination
   HomeModel? homeModel;
@@ -133,6 +134,21 @@ class HomeCubit extends Cubit<HomeState> {
       emit(CategoriesSuccessState(categoriesModel: categoriesModel));
     }).catchError((error) {
       emit(CategoriesErrorState(error: error.toString()));
+    });
+  }
+  late CategoriesModel categoriesDetailsModel;
+  late int catId;
+  void getCategoriesDetails({required int categoryId}) {
+    emit(CategoriesDetailsLoadingState());
+    catId = categoryId;
+    DioHelper.get(
+      url: categories + '/$categoryId',
+    ).then((value) {
+      categoriesDetailsModel = CategoriesModel.fromJson(value.data);
+
+      emit(CategoriesDetailsSuccessState(categoriesModel: categoriesDetailsModel));
+    }).catchError((error) {
+      emit(CategoriesDetailsErrorState(error: error.toString()));
     });
   }
 
