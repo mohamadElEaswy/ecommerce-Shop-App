@@ -5,6 +5,7 @@ import 'package:shop2/src/UI/screens/home/favorite/favorite.dart';
 import 'package:shop2/src/UI/screens/home/home_screen.dart';
 import 'package:shop2/src/UI/screens/home/setting/setting.dart';
 import 'package:shop2/src/config/end_points.dart';
+import 'package:shop2/src/core/models/cart_model.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
 import 'package:shop2/src/core/models/favourites_model.dart';
 import 'package:shop2/src/core/models/home_model.dart';
@@ -136,6 +137,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(CategoriesErrorState(error: error.toString()));
     });
   }
+
   late CategoriesModel categoriesDetailsModel;
   late int catId;
   void getCategoriesDetails({required int categoryId}) {
@@ -146,7 +148,8 @@ class HomeCubit extends Cubit<HomeState> {
     ).then((value) {
       categoriesDetailsModel = CategoriesModel.fromJson(value.data);
 
-      emit(CategoriesDetailsSuccessState(categoriesModel: categoriesDetailsModel));
+      emit(CategoriesDetailsSuccessState(
+          categoriesModel: categoriesDetailsModel));
     }).catchError((error) {
       emit(CategoriesDetailsErrorState(error: error.toString()));
     });
@@ -195,5 +198,34 @@ class HomeCubit extends Cubit<HomeState> {
     }).catchError((error) {
       emit(FavoritesErrorState(error: error.toString()));
     });
+  }
+
+  late CartModel cartModel;
+  //get cart data
+  void getCartData() {
+    emit(CartLoadingState());
+    DioHelper.get(url: cart, token: token).then((value) {
+      cartModel = CartModel.fromJson(value.data);
+      emit(CartSuccessState(cartModel: cartModel));
+    }).catchError((e) {
+      emit(CartErrorState(error: e.toString()));
+    });
+  }
+  //*post to cart the products add and remove
+
+//delete cart
+//update cart
+  late CartModel addToCart;
+  void cartPost({required int productId}) {
+    emit(CartPostLoadingState());
+    DioHelper.post(url: cart+ '/'+productId.toString(), token: token,
+        data: {'product_id': productId}
+        )
+        .then((value) {
+      addToCart = CartModel.fromJson(value.data);
+          // if(addToCart.status = true){ getCartData();}
+      emit(CartPostSuccessState(cartModel: addToCart));
+    })
+        .catchError((e) {CartPostErrorState(error: e.toString());});
   }
 }

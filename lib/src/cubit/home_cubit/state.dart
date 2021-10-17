@@ -1,3 +1,4 @@
+import 'package:shop2/src/core/models/cart_model.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
 import 'package:shop2/src/core/models/favourites_model.dart';
 import 'package:shop2/src/core/models/home_model.dart';
@@ -131,3 +132,29 @@ class FavoritesErrorState extends HomeState {
   FavoritesErrorState({required this.error});
 }
 //end favourites states
+
+//cart get data states
+class CartLoadingState extends HomeState{}
+class CartSuccessState extends HomeState{
+  final CartModel cartModel;
+
+  CartSuccessState({required this.cartModel});
+}
+class CartErrorState extends HomeState{
+  final String error;
+
+  CartErrorState({required this.error});
+}
+
+//cart post data states
+class CartPostLoadingState extends HomeState{}
+class CartPostSuccessState extends HomeState{
+  final CartModel cartModel;
+
+  CartPostSuccessState({required this.cartModel});
+}
+class CartPostErrorState extends HomeState{
+  final String error;
+
+  CartPostErrorState({required this.error});
+}

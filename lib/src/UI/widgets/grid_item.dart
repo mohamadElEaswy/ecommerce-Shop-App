@@ -111,8 +111,8 @@ class GridItem extends StatelessWidget {
                 padding: const EdgeInsets.all(0.0),
               ),
               onPressed: () {
-                // cubit.changeFavourites(
-                //     productId: cubit.homeModel!.data.products[index].id);
+                cubit.cartPost(
+                    productId: cubit.homeModel!.data.products[index].id);
               },
               child:
               // Row(

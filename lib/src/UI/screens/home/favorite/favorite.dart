@@ -4,42 +4,46 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/cubit/home_cubit/cubit.dart';
 import 'package:shop2/src/cubit/home_cubit/state.dart';
+
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit,HomeState>(
-      listener: (context, state){},
-      builder: (context, state){
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context, state) {},
+      builder: (context, state) {
         HomeCubit cubit = HomeCubit.get(context);
         return ConditionalBuilder(
           condition: state is! GetFavoritesLoadingState,
-          fallback: (context)=>const Center(child: CircularProgressIndicator()),
+          fallback: (context) =>
+              const Center(child: CircularProgressIndicator()),
           builder: (context) => ListView.builder(
             physics: const BouncingScrollPhysics(),
             itemCount: cubit.favouriteModel!.data.dataLoad.length,
-              itemBuilder: (context, index) => FavouritesListItem(cubit: cubit, index: index,),
-
+            itemBuilder: (context, index) =>
+                FavouritesListItem(cubit: cubit, index: index),
           ),
-
-        )
-        ;
+        );
       },
     );
   }
 }
 
 class FavouritesListItem extends StatelessWidget {
-  const FavouritesListItem({Key? key, required this.cubit, required this.index,
+  const FavouritesListItem({
+    Key? key,
+    required this.cubit,
+    required this.index,
     // required this.discount
   }) : super(key: key);
- final HomeCubit cubit;
- final int index;
+  final HomeCubit cubit;
+  final int index;
   final bool discount = true;
   @override
   Widget build(BuildContext context) {
-    return Container(margin: const EdgeInsets.all(2.0),
+    return Container(
+      margin: const EdgeInsets.all(2.0),
       color: Colors.white,
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -54,11 +58,13 @@ class FavouritesListItem extends StatelessWidget {
                   Image(
                     height: 120.0,
                     width: 120.0,
-                    image: NetworkImage(cubit.favouriteModel!.data.dataLoad[index].product.image),
+                    image: NetworkImage(cubit
+                        .favouriteModel!.data.dataLoad[index].product.image),
                   ),
-                  if (cubit.favouriteModel!.data.dataLoad[index].product.discount
-                      != 0
-                      // && discount
+                  if (cubit.favouriteModel!.data.dataLoad[index].product
+                          .discount !=
+                      0
+                  // && discount
                   )
                     Container(
                       color: Colors.red,
@@ -83,15 +89,19 @@ class FavouritesListItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "price:\$" '${cubit.favouriteModel!.data.dataLoad[index].product.price.round()}',
+                    "price:\$"
+                    '${cubit.favouriteModel!.data.dataLoad[index].product.price.round()}',
                     style: const TextStyle(fontSize: 12.0, color: defaultColor),
                   ),
                   const SizedBox(height: 5),
-                  if (cubit.favouriteModel!.data.dataLoad[index].product.discount != 0
+                  if (cubit.favouriteModel!.data.dataLoad[index].product
+                          .discount !=
+                      0
                   // && discount
                   )
                     Text(
-                      "old price:" '${cubit.favouriteModel!.data.dataLoad[index].product.oldPrice.round()}',
+                      "old price:"
+                      '${cubit.favouriteModel!.data.dataLoad[index].product.oldPrice.round()}',
                       style: TextStyle(
                           fontSize: 12.0,
                           decoration: TextDecoration.lineThrough,
@@ -99,11 +109,12 @@ class FavouritesListItem extends StatelessWidget {
                     ),
                   Row(
                     children: [
-
                       const Spacer(),
                       IconButton(
                         onPressed: () async {
-                          cubit.changeFavourites(productId: cubit.favouriteModel!.data.dataLoad[index].product.id);
+                          cubit.changeFavourites(
+                              productId: cubit.favouriteModel!.data
+                                  .dataLoad[index].product.id);
                           // changeFavourites(favData.product.id);
                           // model.changeFavourites(favData.product.id);
                         },
@@ -112,8 +123,13 @@ class FavouritesListItem extends StatelessWidget {
                             Icons.favorite_border,
                             color: Colors.white,
                           ),
-                          backgroundColor:
-                          (cubit.favorites[cubit.favouriteModel!.data.dataLoad[index].product.id] == true)
+                          backgroundColor: (cubit.favorites[cubit
+                                      .favouriteModel!
+                                      .data
+                                      .dataLoad[index]
+                                      .product
+                                      .id] ==
+                                  true)
                               ? likeColor
                               : Colors.grey[400],
                         ),
