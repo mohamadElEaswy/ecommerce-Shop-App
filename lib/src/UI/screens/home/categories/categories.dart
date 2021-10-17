@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
-import 'package:shop2/src/UI/screens/home/home_screen.dart';
 import 'package:shop2/src/UI/widgets/grid_item.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
 import 'package:shop2/src/cubit/home_cubit/cubit.dart';
@@ -48,44 +47,33 @@ class CategoriesScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 color: Colors.grey[100],
-                child: Center(
-                  child: cubit.categoriesDetailsModel.data!.data.isEmpty
-                      ? const Center(
-                          child: Text('No products'),
-                        )
-                      : GridView.count(
-                          crossAxisCount: 2,
-                          shrinkWrap: true,
-                          mainAxisSpacing: 1.0,
-                          crossAxisSpacing: 1.0,
-                          childAspectRatio: 1 / 1.8,
-                          physics: const BouncingScrollPhysics(),
-                          children: List.generate(
-                            cubit.categoriesDetailsModel.data!.data.length,
-                            (index) => GridCategoriesItem(
-                              cubit: cubit,
-                              index: index,
-                            ),
+                child: (cubit.categoriesDetailsModel.status != null)
+                    ? GridView.count(
+                        crossAxisCount: 2,
+                        shrinkWrap: true,
+                        mainAxisSpacing: 1.0,
+                        crossAxisSpacing: 1.0,
+                        childAspectRatio: 1 / 1.8,
+                        physics: const BouncingScrollPhysics(),
+                        children:
+        // cubit.categoriesDetailsModel != null ?
+                        List.generate(
+                          cubit.categoriesDetailsModel.data!.data.length,
+                          (index) => GridCategoriesItem(
+                            cubit: cubit,
+                            index: index,
                           ),
+
                         ),
-                ),
+                            // : Center(child: Text,)
+                      ) :const Center(
+                  child: Text('No products'),
+                )
+                    ,
               ),
             )
           ],
         );
-        //   ListView.separated(
-        //   physics: const BouncingScrollPhysics(),
-        //   itemBuilder: (context, index) =>
-        //       BuildCategoriesItem(
-        //         categoriesData: cubit.categoriesModel!.data!.data[index],
-        //       ),
-        //   separatorBuilder: (context, index) =>
-        //       VerticalDivider(
-        //         width: 4.0,
-        //         color: Colors.grey[200],
-        //       ),
-        //   itemCount: cubit.categoriesModel!.data!.data.length,
-        // )
       },
     );
   }

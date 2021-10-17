@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/UI/widgets/grid_item.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
 import 'package:shop2/src/cubit/home_cubit/cubit.dart';
