@@ -5,28 +5,41 @@ import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/cubit/home_cubit/cubit.dart';
 import 'package:shop2/src/cubit/home_cubit/state.dart';
 
-class FavoriteScreen extends StatelessWidget {
+class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 
+  @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
         HomeCubit cubit = HomeCubit.get(context);
-        return ConditionalBuilder(
+        return cubit.favouriteModel.data.total == 0 ?  const EmptyFavouriteList() : ConditionalBuilder(
           condition: state is! GetFavoritesLoadingState,
           fallback: (context) =>
               const Center(child: CircularProgressIndicator()),
           builder: (context) => ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemCount: cubit.favouriteModel!.data.dataLoad.length,
+            itemCount: cubit.favouriteModel.data.dataLoad.length,
             itemBuilder: (context, index) =>
                 FavouritesListItem(cubit: cubit, index: index),
           ),
         );
       },
     );
+  }
+}
+class EmptyFavouriteList extends StatelessWidget {
+  const EmptyFavouriteList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Your favourite list is Empty'),);
   }
 }
 
@@ -59,9 +72,9 @@ class FavouritesListItem extends StatelessWidget {
                     height: 120.0,
                     width: 120.0,
                     image: NetworkImage(cubit
-                        .favouriteModel!.data.dataLoad[index].product.image),
+                        .favouriteModel.data.dataLoad[index].product.image),
                   ),
-                  if (cubit.favouriteModel!.data.dataLoad[index].product
+                  if (cubit.favouriteModel.data.dataLoad[index].product
                           .discount !=
                       0
                   // && discount
@@ -83,25 +96,25 @@ class FavouritesListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    cubit.favouriteModel!.data.dataLoad[index].product.name,
+                    cubit.favouriteModel.data.dataLoad[index].product.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 5),
                   Text(
                     "price:\$"
-                    '${cubit.favouriteModel!.data.dataLoad[index].product.price.round()}',
+                    '${cubit.favouriteModel.data.dataLoad[index].product.price.round()}',
                     style: const TextStyle(fontSize: 12.0, color: defaultColor),
                   ),
                   const SizedBox(height: 5),
-                  if (cubit.favouriteModel!.data.dataLoad[index].product
+                  if (cubit.favouriteModel.data.dataLoad[index].product
                           .discount !=
                       0
                   // && discount
                   )
                     Text(
                       "old price:"
-                      '${cubit.favouriteModel!.data.dataLoad[index].product.oldPrice.round()}',
+                      '${cubit.favouriteModel.data.dataLoad[index].product.oldPrice.round()}',
                       style: TextStyle(
                           fontSize: 12.0,
                           decoration: TextDecoration.lineThrough,
@@ -113,7 +126,7 @@ class FavouritesListItem extends StatelessWidget {
                       IconButton(
                         onPressed: () async {
                           cubit.changeFavourites(
-                              productId: cubit.favouriteModel!.data
+                              productId: cubit.favouriteModel.data
                                   .dataLoad[index].product.id);
                           // changeFavourites(favData.product.id);
                           // model.changeFavourites(favData.product.id);
@@ -124,7 +137,7 @@ class FavouritesListItem extends StatelessWidget {
                             color: Colors.white,
                           ),
                           backgroundColor: (cubit.favorites[cubit
-                                      .favouriteModel!
+                                      .favouriteModel
                                       .data
                                       .dataLoad[index]
                                       .product

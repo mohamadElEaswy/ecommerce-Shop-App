@@ -34,13 +34,13 @@ class GridItem extends StatelessWidget {
                   height: 200.0,
                   fit: BoxFit.fitWidth,
                   image: NetworkImage(
-                    cubit.homeModel!.data.products[index].image,
+                    cubit.homeProducts[index].image,
                   ),
                 ),
               ),
               Row(
                 children: [
-                  if (cubit.homeModel!.data.products[index].discount != 0)
+                  if (cubit.homeProducts[index].discount != 0)
                     Container(
                       color: likeColor,
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -54,7 +54,7 @@ class GridItem extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       cubit.changeFavourites(
-                          productId: cubit.homeModel!.data.products[index].id);
+                          productId: cubit.homeProducts[index].id);
                     },
                     icon: CircleAvatar(
                       child: const Icon(
@@ -62,8 +62,8 @@ class GridItem extends StatelessWidget {
                         color: Colors.white,
                       ),
                       backgroundColor: (cubit.favorites[
-                      cubit.homeModel!.data.products[index].id] ==
-                          true)
+                                  cubit.homeProducts[index].id] ==
+                              true)
                           ? likeColor
                           : Colors.grey[400],
                     ),
@@ -73,7 +73,7 @@ class GridItem extends StatelessWidget {
             ],
           ),
           Text(
-            cubit.homeModel!.data.products[index].name,
+            cubit.homeProducts[index].name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -83,14 +83,14 @@ class GridItem extends StatelessWidget {
               const SizedBox(height: 5.0),
               Text(
                 "price:\$" +
-                    cubit.homeModel!.data.products[index].price.toString(),
+                    cubit.homeProducts[index].price.toString(),
                 style: const TextStyle(fontSize: 12.0, color: defaultColor),
               ),
               const SizedBox(height: 5.0),
-              if (cubit.homeModel!.data.products[index].discount != 0)
+              if (cubit.homeProducts[index].discount != 0)
                 Text(
                   "old price:\$" +
-                      '${cubit.homeModel!.data.products[index].oldPrice.round()}'
+                      '${cubit.homeProducts[index].oldPrice.round()}'
                           .toString(),
                   style: TextStyle(
                       fontSize: 12.0,
@@ -105,31 +105,16 @@ class GridItem extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 elevation: 0.0,
-                // fixedSize: const Size(60.0, 0.0),
-                // minimumSize: const Size(60.0, 30.0),
-                // maximumSize: const Size(75.0, 30.0),
                 padding: const EdgeInsets.all(0.0),
               ),
               onPressed: () {
                 cubit.cartPost(
                     productId: cubit.homeModel!.data.products[index].id);
               },
-              child:
-              // Row(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment:CrossAxisAlignment.center,
-              // children: const [
-              // Icon(
-              //   Icons.add_shopping_cart,
-              //   color: Colors.white,
-              //   size: 12.0,
-              // ),
-              const Text(
+              child: const Text(
                 'Add to cart',
                 style: TextStyle(color: Colors.white, fontSize: 15.0),
               ),
-              // ],
-              // ),
             ),
           ),
         ],
@@ -137,9 +122,6 @@ class GridItem extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class GridCategoriesItem extends StatelessWidget {
   const GridCategoriesItem({Key? key, required this.cubit, required this.index})
@@ -172,13 +154,13 @@ class GridCategoriesItem extends StatelessWidget {
                   height: 200.0,
                   fit: BoxFit.fitWidth,
                   image: NetworkImage(
-                    cubit.homeModel!.data.products[index].image,
+                    cubit.homeProducts[index].image,
                   ),
                 ),
               ),
               Row(
                 children: [
-                  if (cubit.homeModel!.data.products[index].discount != 0)
+                  if (cubit.homeProducts[index].discount != 0)
                     Container(
                       color: likeColor,
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -192,7 +174,7 @@ class GridCategoriesItem extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       cubit.changeFavourites(
-                          productId: cubit.homeModel!.data.products[index].id);
+                          productId: cubit.homeProducts[index].id);
                     },
                     icon: CircleAvatar(
                       child: const Icon(
@@ -200,8 +182,8 @@ class GridCategoriesItem extends StatelessWidget {
                         color: Colors.white,
                       ),
                       backgroundColor: (cubit.favorites[
-                      cubit.homeModel!.data.products[index].id] ==
-                          true)
+                                  cubit.homeProducts[index].id] ==
+                              true)
                           ? likeColor
                           : Colors.grey[400],
                     ),
@@ -211,7 +193,7 @@ class GridCategoriesItem extends StatelessWidget {
             ],
           ),
           Text(
-            cubit.homeModel!.data.products[index].name,
+            cubit.homeProducts[index].name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -221,14 +203,14 @@ class GridCategoriesItem extends StatelessWidget {
               const SizedBox(height: 5.0),
               Text(
                 "price:\$" +
-                    cubit.homeModel!.data.products[index].price.toString(),
+                    cubit.homeProducts[index].price.toString(),
                 style: const TextStyle(fontSize: 12.0, color: defaultColor),
               ),
               const SizedBox(height: 5.0),
-              if (cubit.homeModel!.data.products[index].discount != 0)
+              if (cubit.homeProducts[index].discount != 0)
                 Text(
                   "old price:\$" +
-                      '${cubit.homeModel!.data.products[index].oldPrice.round()}'
+                      '${cubit.homeProducts[index].oldPrice.round()}'
                           .toString(),
                   style: TextStyle(
                       fontSize: 12.0,

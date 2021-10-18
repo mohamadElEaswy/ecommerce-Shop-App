@@ -3,16 +3,11 @@ class CartModel {
   late final void message;
   late final Data data;
 
-
-
-
   CartModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'] = null;
     data = (json['data'] != null ? Data.fromJson(json['data']) : null)!;
   }
-
-
 }
 
 class Data {
@@ -20,11 +15,9 @@ class Data {
   late final dynamic subTotal;
   late final dynamic total;
 
-
-
   Data.fromJson(Map<String, dynamic> json) {
     if (json['cart_items'] != null) {
-      cartItems =  <CartItems>[];
+      cartItems = <CartItems>[];
       json['cart_items'].forEach((v) {
         cartItems.add(CartItems.fromJson(v));
       });
@@ -32,7 +25,6 @@ class Data {
     subTotal = json['sub_total'];
     total = json['total'];
   }
-
 }
 
 class CartItems {
@@ -40,15 +32,12 @@ class CartItems {
   late final int quantity;
   late final Product product;
 
-
-
   CartItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     quantity = json['quantity'];
     product =
-    (json['product'] != null ? Product.fromJson(json['product']) : null)!;
+        (json['product'] != null ? Product.fromJson(json['product']) : null)!;
   }
-
 }
 
 class Product {
@@ -75,5 +64,4 @@ class Product {
     inFavorites = json['in_favorites'];
     inCart = json['in_cart'];
   }
-
 }

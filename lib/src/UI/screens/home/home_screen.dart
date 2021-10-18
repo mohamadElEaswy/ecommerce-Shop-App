@@ -67,7 +67,7 @@ class HomeBodyBuilder extends StatelessWidget {
           Container(
             color: Colors.white,
             child: CarouselSlider(
-              items: cubit.homeModel!.data.banners
+              items: cubit.homeBanners
                   .map((e) => Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Image(
@@ -121,13 +121,13 @@ class HomeBodyBuilder extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => BuildCategoriesHomeItem(
-                    categoriesData: cubit.categoriesModel!.data!.data[index],
+                    categoriesData: cubit.categoriesData[index],
                   ),
                   separatorBuilder: (context, index) => VerticalDivider(
                     width: 4.0,
                     color: Colors.grey[200],
                   ),
-                  itemCount: cubit.categoriesModel!.data!.data.length,
+                  itemCount: cubit.categoriesData.length,
                 ),
               ),
             ],
@@ -163,7 +163,7 @@ class HomeBodyBuilder extends StatelessWidget {
                 childAspectRatio: 1 / 1.6,
                 physics: const NeverScrollableScrollPhysics(),
                 children: List.generate(
-                  cubit.homeModel!.data.products.length,
+                  cubit.homeProducts.length,
                   (index) => GridItem(
                     cubit: cubit,
                     index: index,

@@ -72,6 +72,8 @@ class HomeCubit extends Cubit<HomeState> {
 //TODO Don't forget the pagination
 //get home products data
 //with pagination
+  List<Products> homeProducts = [];
+  List<Banners> homeBanners = [];
   HomeModel? homeModel;
   void getHomeData() {
     emit(HomeLoadingState(homeModel: homeModel));
@@ -84,6 +86,8 @@ class HomeCubit extends Cubit<HomeState> {
           },
         );
       });
+      homeProducts = homeModel!.data.products;
+      homeBanners = homeModel!.data.banners;
       emit(HomeSuccessState(homeModel: homeModel));
     }).catchError((e) {
       emit(HomeErrorState(error: e.toString()));
@@ -120,6 +124,7 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
+  late List<DataModel> categoriesData = [];
 // get categories data
   CategoriesModel? categoriesModel;
   late Map<int, bool?> favorites = {};
@@ -131,7 +136,7 @@ class HomeCubit extends Cubit<HomeState> {
       url: categories,
     ).then((value) {
       categoriesModel = CategoriesModel.fromJson(value.data);
-
+      categoriesData = categoriesModel!.data!.data;
       emit(CategoriesSuccessState(categoriesModel: categoriesModel));
     }).catchError((error) {
       emit(CategoriesErrorState(error: error.toString()));
@@ -186,20 +191,24 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
 //get favourites data
-  FavouriteModel? favouriteModel;
+  late FavouriteModel favouriteModel;
   void getFavouritesData() {
     emit(GetFavoritesLoadingState());
     DioHelper.get(
       url: favorite,
       token: token,
     ).then((value) {
-      favouriteModel = FavouriteModel.fromJson(value.data);
-      emit(FavoritesSuccessState(favouriteModel: favouriteModel));
+      // if(value.) {
+        favouriteModel = FavouriteModel.fromJson(value.data);
+        emit(FavoritesSuccessState(favouriteModel: favouriteModel));
+      // }
     }).catchError((error) {
+      print(error.toString());
       emit(FavoritesErrorState(error: error.toString()));
     });
   }
 
+  late Map<int, bool?> cartData = {};
   late CartModel cartModel;
   //get cart data
   void getCartData() {
@@ -215,17 +224,23 @@ class HomeCubit extends Cubit<HomeState> {
 
 //delete cart
 //update cart
-  late CartModel addToCart;
+  CartModel? addToCart;
   void cartPost({required int productId}) {
     emit(CartPostLoadingState());
-    DioHelper.post(url: cart+ '/'+productId.toString(), token: token,
-        data: {'product_id': productId}
-        )
-        .then((value) {
+    DioHelper.post(
+      url: cart,
+      token: token,
+      data: {
+        'product_id': productId,
+      },
+    ).then((value) {
       addToCart = CartModel.fromJson(value.data);
-          // if(addToCart.status = true){ getCartData();}
-      emit(CartPostSuccessState(cartModel: addToCart));
-    })
-        .catchError((e) {CartPostErrorState(error: e.toString());});
+      if (addToCart!.status == true) {
+        getCartData();
+      }
+      emit(CartPostSuccessState(cartModel: addToCart!));
+    }).catchError((e) {
+      CartPostErrorState(error: e.toString());
+    });
   }
 }

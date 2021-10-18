@@ -5,7 +5,7 @@ import 'package:shop2/src/core/models/categories_model.dart';
 import 'package:shop2/src/cubit/home_cubit/cubit.dart';
 import 'package:shop2/src/cubit/home_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+// import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -56,20 +56,19 @@ class CategoriesScreen extends StatelessWidget {
                         childAspectRatio: 1 / 1.8,
                         physics: const BouncingScrollPhysics(),
                         children:
-        // cubit.categoriesDetailsModel != null ?
-                        List.generate(
+                            // cubit.categoriesDetailsModel != null ?
+                            List.generate(
                           cubit.categoriesDetailsModel.data!.data.length,
                           (index) => GridCategoriesItem(
                             cubit: cubit,
                             index: index,
                           ),
-
                         ),
-                            // : Center(child: Text,)
-                      ) :const Center(
-                  child: Text('No products'),
-                )
-                    ,
+                        // : Center(child: Text,)
+                      )
+                    : const Center(
+                        child: Text('No products'),
+                      ),
               ),
             )
           ],
