@@ -3,13 +3,16 @@ import 'package:shop2/src/UI/screens/home/cart/cart.dart';
 import 'package:shop2/src/UI/screens/home/categories/categories.dart';
 import 'package:shop2/src/UI/screens/home/favorite/favorite.dart';
 import 'package:shop2/src/UI/screens/home/home_screen.dart';
+import 'package:shop2/src/UI/screens/home/product_details/product_details.dart';
 import 'package:shop2/src/UI/screens/home/setting/setting.dart';
 import 'package:shop2/src/config/end_points.dart';
 import 'package:shop2/src/core/models/cart_model.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
 import 'package:shop2/src/core/models/favourites_model.dart';
 import 'package:shop2/src/core/models/home_model.dart';
+import 'package:shop2/src/core/models/product_details_model.dart';
 import 'package:shop2/src/core/models/user_model.dart';
+import 'package:shop2/src/core/route/const_route_functions.dart';
 import 'package:shop2/src/cubit/home_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop2/src/data/remote/dio_helper.dart';
@@ -199,22 +202,29 @@ class HomeCubit extends Cubit<HomeState> {
       token: token,
     ).then((value) {
       // if(value.) {
-        favouriteModel = FavouriteModel.fromJson(value.data);
-        emit(FavoritesSuccessState(favouriteModel: favouriteModel));
+      favouriteModel = FavouriteModel.fromJson(value.data);
+      emit(FavoritesSuccessState(favouriteModel: favouriteModel));
       // }
     }).catchError((error) {
-      print(error.toString());
       emit(FavoritesErrorState(error: error.toString()));
     });
   }
 
   late Map<int, bool?> cartData = {};
   late CartModel cartModel;
+  late CartModel changeCart;
   //get cart data
   void getCartData() {
     emit(CartLoadingState());
     DioHelper.get(url: cart, token: token).then((value) {
       cartModel = CartModel.fromJson(value.data);
+      cartModel.data.cartItems.forEach((element) {
+        cartData.addAll(
+          {
+            element.product.id: element.product.inCart,
+          },
+        );
+      });
       emit(CartSuccessState(cartModel: cartModel));
     }).catchError((e) {
       emit(CartErrorState(error: e.toString()));
@@ -222,9 +232,8 @@ class HomeCubit extends Cubit<HomeState> {
   }
   //*post to cart the products add and remove
 
-//delete cart
-//update cart
-  CartModel? addToCart;
+//delete product from cart
+//update product from cart
   void cartPost({required int productId}) {
     emit(CartPostLoadingState());
     DioHelper.post(
@@ -234,13 +243,42 @@ class HomeCubit extends Cubit<HomeState> {
         'product_id': productId,
       },
     ).then((value) {
-      addToCart = CartModel.fromJson(value.data);
-      if (addToCart!.status == true) {
+      // cartData[productId] = !cartData[productId]!;
+      changeCart = CartModel.fromJson(value.data);
+      if (changeCart.status == true) {
+        getHomeData();
         getCartData();
       }
-      emit(CartPostSuccessState(cartModel: addToCart!));
+      emit(CartPostSuccessState(cartModel: changeCart));
     }).catchError((e) {
       CartPostErrorState(error: e.toString());
     });
+  }
+// add or remove single product from cart
+  void cartQuantity({required int cartItemId, required int quantity}) {
+    emit(CartQuantityLoadingState());
+    DioHelper.put(url: cart + '/$cartItemId', token: token, data: {
+      "quantity": quantity,
+    }).then((value) {
+      changeCart = CartModel.fromJson(value.data);
+      if (changeCart.status == true) {
+        getCartData();
+      }
+      emit(CartQuantitySuccessState(cartModel: changeCart));
+    }).catchError((e) {
+      emit(CartQuantityErrorState(error: e.toString()));
+    });
+  }
+  late int singleProductId;
+  late ProductDetailsModel singleProduct;
+  void getSingleProduct({required int productId, required BuildContext context}){
+    emit(SingleProductLoading());
+    singleProductId = productId;
+    navigate(context: context, newRouteName: ProductDetails.routeName);
+    DioHelper.get(url: productDetails + '$productId',token: token).then((value){
+      singleProduct = ProductDetailsModel.fromJson(value.data);
+      emit(SingleProductSuccess(singleProduct: singleProduct));
+    }).catchError((e){emit(SingleProductError(error: e.toString()));});
+
   }
 }

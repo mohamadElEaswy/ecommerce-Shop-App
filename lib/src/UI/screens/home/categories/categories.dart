@@ -12,6 +12,11 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -22,7 +27,7 @@ class CategoriesScreen extends StatelessWidget {
           children: [
             Container(
               color: Colors.grey[100],
-              width: 100.0,
+              width: 80.0,
               height: double.infinity,
               child: Center(
                 child: SingleChildScrollView(
@@ -53,18 +58,16 @@ class CategoriesScreen extends StatelessWidget {
                         shrinkWrap: true,
                         mainAxisSpacing: 1.0,
                         crossAxisSpacing: 1.0,
-                        childAspectRatio: 1 / 1.8,
+                        // childAspectRatio: 1 / 1.8,
+                        childAspectRatio: (itemWidth - 20) / itemHeight,
                         physics: const BouncingScrollPhysics(),
-                        children:
-                            // cubit.categoriesDetailsModel != null ?
-                            List.generate(
+                        children: List.generate(
                           cubit.categoriesDetailsModel.data!.data.length,
                           (index) => GridCategoriesItem(
                             cubit: cubit,
                             index: index,
                           ),
                         ),
-                        // : Center(child: Text,)
                       )
                     : const Center(
                         child: Text('No products'),
@@ -96,7 +99,7 @@ class BuildCategoriesItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(4.0),
         height: 50.0,
-        width: 100.0,
+        width: 80.0,
         child: Text(
           categoriesData.name,
           maxLines: 1,

@@ -15,4 +15,6 @@ const String search = 'products/search';
 const String update = 'update-profile';
 const String cart = 'carts';
 
+const String productDetails = 'products/';
+
 String? token;

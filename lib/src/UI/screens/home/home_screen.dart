@@ -59,6 +59,11 @@ class HomeBodyBuilder extends StatelessWidget {
   final HomeCubit cubit;
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -160,8 +165,12 @@ class HomeBodyBuilder extends StatelessWidget {
                 shrinkWrap: true,
                 mainAxisSpacing: 1.0,
                 crossAxisSpacing: 1.0,
-                childAspectRatio: 1 / 1.6,
+                scrollDirection: Axis.vertical,
+                // childAspectRatio: .7,
+                // childAspectRatio: 1 / 1.6,
+                childAspectRatio: itemWidth / itemHeight,
                 physics: const NeverScrollableScrollPhysics(),
+                controller: ScrollController(keepScrollOffset: false),
                 children: List.generate(
                   cubit.homeProducts.length,
                   (index) => GridItem(

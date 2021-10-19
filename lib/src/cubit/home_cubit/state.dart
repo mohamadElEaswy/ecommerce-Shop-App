@@ -2,6 +2,7 @@ import 'package:shop2/src/core/models/cart_model.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
 import 'package:shop2/src/core/models/favourites_model.dart';
 import 'package:shop2/src/core/models/home_model.dart';
+import 'package:shop2/src/core/models/product_details_model.dart';
 import 'package:shop2/src/core/models/user_model.dart';
 //after login states
 
@@ -68,7 +69,7 @@ class UpdateErrorState extends HomeState {
 }
 //end settings states
 
-//categories staes
+//categories states
 class CategoriesLoadingState extends HomeState {}
 
 class CategoriesSuccessState extends HomeState {
@@ -157,4 +158,33 @@ class CartPostErrorState extends HomeState{
   final String error;
 
   CartPostErrorState({required this.error});
+}
+
+//cart quantity ++ --
+
+class CartQuantityLoadingState extends HomeState{}
+class CartQuantitySuccessState extends HomeState{
+  final CartModel cartModel;
+
+  CartQuantitySuccessState({required this.cartModel});
+}
+
+class CartQuantityErrorState extends HomeState{
+  final String error;
+
+  CartQuantityErrorState({required this.error});
+}
+
+// get single product data
+class SingleProductLoading extends HomeState{}
+class SingleProductSuccess extends HomeState{
+  final ProductDetailsModel singleProduct;
+
+  SingleProductSuccess({required this.singleProduct});
+}
+
+class SingleProductError extends HomeState{
+  final String error;
+
+  SingleProductError({required this.error});
 }

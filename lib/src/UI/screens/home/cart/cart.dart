@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/cubit/home_cubit/cubit.dart';
 import 'package:shop2/src/cubit/home_cubit/state.dart';
 
@@ -18,6 +19,7 @@ class CartScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) => ProductsItem(
                     cubit: cubit,
                     index: index,
@@ -26,7 +28,10 @@ class CartScreen extends StatelessWidget {
                   itemCount: cubit.cartModel.data.cartItems.length,
                 ),
               ),
-              Text('total' + cubit.cartModel.data.total.toString()),
+              Text(
+                'total price: ' + cubit.cartModel.data.total.toString() + ' \$',
+                style: const TextStyle(color: activeColor, fontSize: 16.0),
+              ),
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -50,16 +55,42 @@ class ProductsItem extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: [
-          Image(
-              width: 100.0,
-              height: 100.0,
-              image: NetworkImage(
-                  cubit.cartModel.data.cartItems[index].product.image)),
+          Stack(
+            alignment: Alignment.bottomLeft,
+            children: [
+              Image(
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+
+                    return const SizedBox(
+                        height: 200.0,
+                        child: Center(child: CircularProgressIndicator()));
+                  },
+                  errorBuilder: (context, error, stackTrace) => const SizedBox(
+                      height: 200.0,
+                      child: Center(child: Text('Some errors occurred!'))),
+                  width: 100.0,
+                  height: 100.0,
+                  image: NetworkImage(
+                      cubit.cartModel.data.cartItems[index].product.image)),
+              if (cubit.cartModel.data.cartItems[index].product.discount != 0)
+                Container(
+                  color: likeColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: const Text(
+                    'DISCOUNT',
+                    style: TextStyle(color: Colors.white, fontSize: 12.0),
+                  ),
+                ),
+            ],
+          ),
           const SizedBox(width: 5),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 150.0,
+                width: 180.0,
                 child: Text(
                   cubit.cartModel.data.cartItems[index].product.name,
                   maxLines: 2,
@@ -67,8 +98,76 @@ class ProductsItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
+              const SizedBox(height: 5.0),
+              Text(
+                'price: ' +
+                    cubit.cartModel.data.cartItems[index].product.price
+                        .toString() +
+                    ' \$',
+                maxLines: 2,
+                style: const TextStyle(color: activeColor),
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 5.0),
+              if (cubit.cartModel.data.cartItems[index].product.discount != 0)
+                Text(
+                  "old price:\$" +
+                      '${cubit.cartModel.data.cartItems[index].product.oldPrice.round()}'
+                          .toString(),
+                  style: TextStyle(
+                      fontSize: 12.0,
+                      decoration: TextDecoration.lineThrough,
+                      color: Colors.grey[400]),
+                ),
+              const SizedBox(height: 5.0),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        cubit.cartQuantity(
+                          cartItemId: cubit.cartModel.data.cartItems[index].id,
+                          quantity:
+                              cubit.cartModel.data.cartItems[index].quantity +
+                                  1,
+                        );
+                      },
+                      icon: const Icon(Icons.add)),
+                  Text(cubit.cartModel.data.cartItems[index].quantity
+                      .toString()),
+                  IconButton(
+                      onPressed: () {
+                        if (cubit.cartModel.data.cartItems[index].quantity >
+                            1) {
+                          cubit.cartQuantity(
+                            cartItemId:
+                                cubit.cartModel.data.cartItems[index].id,
+                            quantity:
+                                cubit.cartModel.data.cartItems[index].quantity -
+                                    1,
+                          );
+                        }
+                      },
+                      icon: const Icon(Icons.minimize)),
+                ],
+              )
             ],
-          )
+          ), IconButton(
+            onPressed: () {
+              cubit.changeFavourites(
+                  productId: cubit.homeProducts[index].id);
+            },
+            icon: CircleAvatar(
+              child: const Icon(
+                Icons.favorite_border,
+                color: Colors.white,
+              ),
+              backgroundColor:
+              (cubit.favorites[cubit.homeProducts[index].id] ==
+                  true)
+                  ? likeColor
+                  : Colors.grey[400],
+            ),
+          ),
         ],
       ),
     );
