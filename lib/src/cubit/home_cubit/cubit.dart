@@ -201,11 +201,13 @@ class HomeCubit extends Cubit<HomeState> {
       url: favorite,
       token: token,
     ).then((value) {
-      // if(value.) {
+      print(value.data);
+      // if(value.data) {
       favouriteModel = FavouriteModel.fromJson(value.data);
       emit(FavoritesSuccessState(favouriteModel: favouriteModel));
       // }
     }).catchError((error) {
+      print(error.toString());
       emit(FavoritesErrorState(error: error.toString()));
     });
   }

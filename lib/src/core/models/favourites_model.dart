@@ -12,7 +12,7 @@ class ChangeFavouritesModel {
 
 class FavouriteModel {
   late final bool status;
-  late final Null message;
+  late dynamic message;
   late final Data data;
 
   FavouriteModel.fromJson(Map<String, dynamic> json) {
@@ -29,10 +29,10 @@ class Data {
   late final int from;
   late final int lastPage;
   late final String lastPageUrl;
-  late final Null nextPageUrl;
+  late final int nextPageUrl;
   late final String path;
   late final int perPage;
-  late final Null prevPageUrl;
+  late final int? prevPageUrl;
   late final int to;
   late final int total;
 
