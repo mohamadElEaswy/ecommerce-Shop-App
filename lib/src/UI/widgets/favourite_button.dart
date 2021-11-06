@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
-import 'package:shop2/src/cubit/home_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
 
 class GlobalFavouriteButton extends StatefulWidget {
-  GlobalFavouriteButton({Key? key, required this.cubit, required this.num}) : super(key: key);
-final HomeCubit cubit;
- late int num;
+  const GlobalFavouriteButton({Key? key, required this.cubit, required this.num}) : super(key: key);
+final ShopCubit cubit;
+ final int num;
 
   @override
   State<GlobalFavouriteButton> createState() => _GlobalFavouriteButtonState();
@@ -18,14 +18,14 @@ class _GlobalFavouriteButtonState extends State<GlobalFavouriteButton> {
       IconButton(
         onPressed: () async {
           widget.cubit.changeFavourites(
-              productId: widget.cubit.favouriteModel.data
+              productId: widget.cubit.favouriteModel!.data
                   .dataLoad[widget.num].product.id);
         },
         icon: const Icon(
           Icons.favorite_border,
           color: Colors.white,
         ),color: (widget.cubit.favorites[widget.cubit
-          .favouriteModel
+          .favouriteModel!
           .data
           .dataLoad[widget.num]
           .product
@@ -36,17 +36,17 @@ class _GlobalFavouriteButtonState extends State<GlobalFavouriteButton> {
     );
   }
 }
-Widget btnFav({required HomeCubit cubit, required int num}) =>IconButton(
+Widget btnFav({required ShopCubit cubit, required int num}) =>IconButton(
   onPressed: () async {
     cubit.changeFavourites(
-        productId: cubit.favouriteModel.data
+        productId: cubit.favouriteModel!.data
             .dataLoad[num].product.id);
   },
   icon: const Icon(
     Icons.favorite_border,
     color: Colors.white,
   ),color: (cubit.favorites[cubit
-    .favouriteModel
+    .favouriteModel!
     .data
     .dataLoad[num]
     .product

@@ -6,8 +6,9 @@ import 'package:shop2/src/UI/widgets/default_form_button.dart';
 import 'package:shop2/src/UI/widgets/toast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:shop2/src/cubit/home_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
+
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -15,25 +16,25 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController(
-        text: HomeCubit.get(context).userModel!.userData!.email);
+        text: ShopCubit.get(context).userModel.userData!.email);
     TextEditingController nameController = TextEditingController(
-        text: HomeCubit.get(context).userModel!.userData!.name);
+        text: ShopCubit.get(context).userModel.userData!.name);
     TextEditingController phoneController = TextEditingController(
-        text: HomeCubit.get(context).userModel!.userData!.phone);
+        text: ShopCubit.get(context).userModel.userData!.phone);
 
     var formKey = GlobalKey<FormState>();
-    return BlocConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<ShopCubit, ShopState>(
       listener: (context, state) {
         if (state is UpdateErrorState) {
           defaultToast(
-            msg: HomeCubit.get(context).userModel!.message,
+            msg: ShopCubit.get(context).userModel.message,
             state: toastStates.error,
           );
         }
         if (state is UpdateSuccessState) {
           if (state.userModel!.status) {
             defaultToast(
-              msg: HomeCubit.get(context).userModel!.message,
+              msg: ShopCubit.get(context).userModel.message,
               state: toastStates.success,
             );
           }
@@ -41,7 +42,7 @@ class SettingScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: HomeCubit.get(context).userModel != null,
+          condition: ShopCubit.get(context).userModel.userData!.token.isNotEmpty,
           builder: (context) => Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(spacerHeight),
@@ -119,7 +120,7 @@ class SettingScreen extends StatelessWidget {
                         text: 'update'.toUpperCase(),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            HomeCubit.get(context).updateSettingsData(
+                            ShopCubit.get(context).updateSettingsData(
                               email: emailController.text,
                               // password: passwordController.text,
                               phone: phoneController.text,

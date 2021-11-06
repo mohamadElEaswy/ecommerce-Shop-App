@@ -1,6 +1,6 @@
 class ProductDetailsModel {
   late bool status;
-  late Null message;
+  late dynamic message;
   late Data data;
 
   ProductDetailsModel.fromJson(Map<String, dynamic> json) {

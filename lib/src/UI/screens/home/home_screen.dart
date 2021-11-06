@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shop2/src/UI/widgets/grid_item.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
-import 'package:shop2/src/cubit/home_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,10 +12,10 @@ class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<ShopCubit, ShopState>(
       listener: (context, state) {},
       builder: (context, state) {
-        HomeCubit cubit = HomeCubit.get(context);
+        ShopCubit cubit = ShopCubit.get(context);
         return Scaffold(
           appBar: AppBar(leading: const SizedBox()),
           body: cubit.body[cubit.currentIndex],
@@ -37,16 +37,14 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<ShopCubit, ShopState>(
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: HomeCubit.get(context).homeModel != null &&
-              HomeCubit.get(context).categoriesModel != null,
-          fallback: (context) => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          builder: (context) => HomeBodyBuilder(cubit: HomeCubit.get(context)),
+          condition: ShopCubit.get(context).homeModel != null &&
+              ShopCubit.get(context).categoriesModel != null,
+          fallback: (context) => const Center(child: CircularProgressIndicator()),
+          builder: (context) => HomeBodyBuilder(cubit: ShopCubit.get(context)),
         );
       },
     );
@@ -56,7 +54,7 @@ class Home extends StatelessWidget {
 //home body
 class HomeBodyBuilder extends StatelessWidget {
   const HomeBodyBuilder({Key? key, required this.cubit}) : super(key: key);
-  final HomeCubit cubit;
+  final ShopCubit cubit;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -72,7 +70,7 @@ class HomeBodyBuilder extends StatelessWidget {
           Container(
             color: Colors.white,
             child: CarouselSlider(
-              items: cubit.homeBanners
+              items: cubit.homeModel!.data.banners
                   .map((e) => Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Image(
@@ -112,7 +110,8 @@ class HomeBodyBuilder extends StatelessWidget {
                     const Spacer(),
                     ElevatedButton(
                       child: const Text('view all'),
-                      onPressed: () {},
+                      onPressed: () {
+                      },
                     ),
                   ],
                 ),
@@ -126,13 +125,13 @@ class HomeBodyBuilder extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => BuildCategoriesHomeItem(
-                    categoriesData: cubit.categoriesData[index],
+                    categoriesData: cubit.categoriesModel!.data!.data[index],
                   ),
                   separatorBuilder: (context, index) => VerticalDivider(
                     width: 4.0,
                     color: Colors.grey[200],
                   ),
-                  itemCount: cubit.categoriesData.length,
+                  itemCount: cubit.categoriesModel!.data!.data.length,
                 ),
               ),
             ],
@@ -172,7 +171,7 @@ class HomeBodyBuilder extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 controller: ScrollController(keepScrollOffset: false),
                 children: List.generate(
-                  cubit.homeProducts.length,
+                  cubit.homeModel!.data.products.length,
                   (index) => GridItem(
                     cubit: cubit,
                     index: index,

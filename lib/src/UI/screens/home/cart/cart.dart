@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
-import 'package:shop2/src/cubit/home_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
+
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<ShopCubit, ShopState>(
       listener: (context, state) {},
       builder: (context, state) {
-        HomeCubit cubit = HomeCubit.get(context);
+        ShopCubit cubit = ShopCubit.get(context);
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -47,14 +48,14 @@ class CartScreen extends StatelessWidget {
 class ProductsItem extends StatelessWidget {
   const ProductsItem({Key? key, required this.cubit, required this.index})
       : super(key: key);
-  final HomeCubit cubit;
+  final ShopCubit cubit;
   final int index;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         cubit.getSingleProduct(
-            productId: cubit.homeProducts[index].id, context: context);
+            productId: cubit.homeModel!.data.products[index].id, context: context);
       },
       child: Container(
         color: Colors.white,
@@ -162,7 +163,7 @@ class ProductsItem extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                cubit.changeFavourites(productId: cubit.homeProducts[index].id);
+                cubit.changeFavourites(productId: cubit.homeModel!.data.products[index].id);
               },
               icon: CircleAvatar(
                 child: const Icon(
@@ -170,7 +171,7 @@ class ProductsItem extends StatelessWidget {
                   color: Colors.white,
                 ),
                 backgroundColor:
-                    (cubit.favorites[cubit.homeProducts[index].id] == true)
+                    (cubit.favorites[cubit.homeModel!.data.products[index].id] == true)
                         ? likeColor
                         : Colors.grey[400],
               ),

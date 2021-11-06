@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/UI/widgets/grid_item.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
-import 'package:shop2/src/cubit/home_cubit/cubit.dart';
-import 'package:shop2/src/cubit/home_cubit/state.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+import 'package:shop2/src/cubit/auth_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
@@ -17,10 +17,10 @@ class CategoriesScreen extends StatelessWidget {
     /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
-    return BlocConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<ShopCubit, ShopState>(
       listener: (context, state) {},
       builder: (context, state) {
-        HomeCubit cubit = HomeCubit.get(context);
+        ShopCubit cubit = ShopCubit.get(context);
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +88,7 @@ class BuildCategoriesItem extends StatelessWidget {
       })
       : super(key: key);
   final DataModel categoriesData;
-  final HomeCubit cubit;
+  final ShopCubit cubit;
   // final Function onTap;
   @override
   Widget build(BuildContext context) {

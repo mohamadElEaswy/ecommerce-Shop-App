@@ -1,19 +1,21 @@
 //products items on home GRID
 import 'package:flutter/material.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
-import 'package:shop2/src/UI/widgets/favourite_button.dart';
-import 'package:shop2/src/cubit/home_cubit/cubit.dart';
-
+import 'package:shop2/src/UI/screens/home/product_details/product_details.dart';
+import 'package:shop2/src/core/route/const_route_functions.dart';
+import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
 class GridItem extends StatelessWidget {
   const GridItem({Key? key, required this.cubit, required this.index})
       : super(key: key);
-  final HomeCubit cubit;
+  final ShopCubit cubit;
   final int index;
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: (){
-        cubit.getSingleProduct(productId: cubit.homeProducts[index].id, context: context);
+        cubit.getSingleProduct(productId: cubit.homeModel!.data.products[index].id, context: context);
+        navigate(context: context, newRouteName: ProductDetails.routeName, args: cubit.homeModel!.data.products[index].id);
       },
       child: Container(
         // height: 400.0,
@@ -40,13 +42,13 @@ class GridItem extends StatelessWidget {
                     height: 200.0,
                     fit: BoxFit.fitWidth,
                     image: NetworkImage(
-                      cubit.homeProducts[index].image,
+                      cubit.homeModel!.data.products[index].image,
                     ),
                   ),
                 ),
                 Row(
                   children: [
-                    if (cubit.homeProducts[index].discount != 0)
+                    if (cubit.homeModel!.data.products[index].discount != 0)
                       Container(
                         color: likeColor,
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -62,22 +64,23 @@ class GridItem extends StatelessWidget {
                     IconButton(
                       onPressed: () async {
                         cubit.changeFavourites(
-                            productId: cubit.favouriteModel.data
-                                .dataLoad[index].product.id);
+                            productId: cubit.homeModel!.data.products[index].id);
                       },
                       icon: const Icon(
                         Icons.favorite_border,
                         color: Colors.white,
-                      ),color: (cubit.favorites[cubit.favouriteModel.data.dataLoad[index].product.id] == true)
+                      ),color:
+                    cubit.homeModel!.data.products[index].inCart == true
                         ? likeColor
-                        : Colors.grey[400],
+                        :
+                      Colors.grey[400],
                     )
                   ],
                 ),
               ],
             ),
             Text(
-              cubit.homeProducts[index].name,
+              cubit.homeModel!.data.products[index].name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -86,14 +89,14 @@ class GridItem extends StatelessWidget {
               children: [
                 const SizedBox(height: 5.0),
                 Text(
-                  "price:\$" + cubit.homeProducts[index].price.toString(),
+                  "price:\$" + cubit.homeModel!.data.products[index].price.toString(),
                   style: const TextStyle(fontSize: 12.0, color: defaultColor),
                 ),
                 const SizedBox(height: 5.0),
-                if (cubit.homeProducts[index].discount != 0)
+                if (cubit.homeModel!.data.products[index].discount != 0)
                   Text(
                     "old price:\$" +
-                        '${cubit.homeProducts[index].oldPrice.round()}'
+                        '${cubit.homeModel!.data.products[index].oldPrice.round()}'
                             .toString(),
                     style: TextStyle(
                         fontSize: 12.0,
@@ -115,7 +118,7 @@ class GridItem extends StatelessWidget {
                       productId: cubit.homeModel!.data.products[index].id);
                 },
                 child: Text(
-                  cubit.homeProducts[index].inCart != true
+                  cubit.homeModel!.data.products[index].inCart != true
                       ? 'Add to cart'
                       : 'Remove from Cart',
                   style: const TextStyle(color: Colors.white, fontSize: 15.0),
@@ -132,13 +135,13 @@ class GridItem extends StatelessWidget {
 class GridCategoriesItem extends StatelessWidget {
   const GridCategoriesItem({Key? key, required this.cubit, required this.index})
       : super(key: key);
-  final HomeCubit cubit;
+  final ShopCubit cubit;
   final int index;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        cubit.getSingleProduct(productId: cubit.homeProducts[index].id, context: context);
+        cubit.getSingleProduct(productId: cubit.homeModel!.data.products[index].id, context: context);
       },
       child: Container(
         color: Colors.white,
@@ -164,13 +167,13 @@ class GridCategoriesItem extends StatelessWidget {
                     height: 200.0,
                     fit: BoxFit.fitWidth,
                     image: NetworkImage(
-                      cubit.homeProducts[index].image,
+                      cubit.homeModel!.data.products[index].image,
                     ),
                   ),
                 ),
                 Row(
                   children: [
-                    if (cubit.homeProducts[index].discount != 0)
+                    if (cubit.homeModel!.data.products[index].discount != 0)
                       Container(
                         color: likeColor,
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -183,14 +186,14 @@ class GridCategoriesItem extends StatelessWidget {
                     IconButton(
                       onPressed: () async {
                         cubit.changeFavourites(
-                            productId: cubit.favouriteModel.data
+                            productId: cubit.favouriteModel!.data
                                 .dataLoad[index].product.id);
                       },
                       icon: const Icon(
                         Icons.favorite_border,
                         color: Colors.white,
                       ),color: (cubit.favorites[cubit
-                        .favouriteModel
+                        .favouriteModel!
                         .data
                         .dataLoad[index]
                         .product
@@ -205,7 +208,7 @@ class GridCategoriesItem extends StatelessWidget {
               ],
             ),
             Text(
-              cubit.homeProducts[index].name,
+              cubit.homeModel!.data.products[index].name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -214,14 +217,14 @@ class GridCategoriesItem extends StatelessWidget {
               children: [
                 const SizedBox(height: 5.0),
                 Text(
-                  "price:\$" + cubit.homeProducts[index].price.toString(),
+                  "price:\$" + cubit.homeModel!.data.products[index].price.toString(),
                   style: const TextStyle(fontSize: 12.0, color: defaultColor),
                 ),
                 const SizedBox(height: 5.0),
-                if (cubit.homeProducts[index].discount != 0)
+                if (cubit.homeModel!.data.products[index].discount != 0)
                   Text(
                     "old price:\$" +
-                        '${cubit.homeProducts[index].oldPrice.round()}'
+                        '${cubit.homeModel!.data.products[index].oldPrice.round()}'
                             .toString(),
                     style: TextStyle(
                         fontSize: 12.0,

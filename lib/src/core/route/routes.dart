@@ -32,7 +32,7 @@ class AppRoute {
 
         case ProductDetails.routeName:
         return MaterialPageRoute(
-          builder: (context) => const ProductDetails(),
+          builder: (context) => ProductDetails(productId: args,),
         );
 
       default:

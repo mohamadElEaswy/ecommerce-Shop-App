@@ -23,18 +23,18 @@ class FavouriteModel {
 }
 
 class Data {
-  late final int currentPage;
+  late final int? currentPage;
   List<FavData> dataLoad = [];
   late final String firstPageUrl;
-  late final int from;
-  late final int lastPage;
-  late final String lastPageUrl;
-  late final int nextPageUrl;
-  late final String path;
-  late final int perPage;
+  late final int? from;
+  late final int? lastPage;
+  late final String? lastPageUrl;
+  late final int? nextPageUrl;
+  late final String? path;
+  late final int? perPage;
   late final int? prevPageUrl;
-  late final int to;
-  late final int total;
+  late final int? to;
+  late final int? total;
 
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
