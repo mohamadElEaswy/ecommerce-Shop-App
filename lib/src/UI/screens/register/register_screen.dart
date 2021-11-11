@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shop2/src/UI/screens/login/login_screen.dart';
 import 'package:shop2/src/UI/widgets/default_form_button.dart';
 import 'package:shop2/src/UI/widgets/default_text_form_widget.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
@@ -124,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       text: 'LogIn with your account'.toUpperCase(),
                       onPressed: () {
                         navigateAndRemove(
-                            context: context, newRouteName: '/login');
+                            context: context, newRouteName: LogInScreen.routeName);
                       },
                     ),
                   ),

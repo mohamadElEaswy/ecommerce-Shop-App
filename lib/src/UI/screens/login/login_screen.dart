@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
+import 'package:shop2/src/UI/screens/register/register_screen.dart';
 import 'package:shop2/src/UI/widgets/default_text_form_widget.dart';
 import 'package:shop2/src/UI/widgets/default_form_button.dart';
 import 'package:shop2/src/UI/widgets/toast.dart';
@@ -110,7 +111,9 @@ class _LogInScreenState extends State<LogInScreen> {
                         text: 'register'.toUpperCase(),
                         onPressed: () {
                           navigateAndRemove(
-                              context: context, newRouteName: '/register');
+                            context: context,
+                            newRouteName: RegisterScreen.routeName,
+                          );
                         },
                       ),
                     ),

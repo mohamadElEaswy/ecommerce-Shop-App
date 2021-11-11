@@ -4,6 +4,7 @@ import 'package:shop2/src/UI/screens/home/categories/categories.dart';
 import 'package:shop2/src/UI/screens/home/favorite/favorite.dart';
 import 'package:shop2/src/UI/screens/home/home_screen.dart';
 import 'package:shop2/src/UI/screens/home/setting/setting.dart';
+import 'package:shop2/src/UI/screens/login/login_screen.dart';
 import 'package:shop2/src/config/end_points.dart';
 import 'package:shop2/src/core/models/cart_model.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
@@ -49,7 +50,7 @@ class ShopCubit extends Cubit<ShopState> {
       getData();
       navigateAndRemove(
         context: context,
-        newRouteName: '/home',
+        newRouteName: HomeScreen.routeName,
       );
       emit(LoginSuccessState(userModel));
     }).catchError((e) {
@@ -83,11 +84,12 @@ class ShopCubit extends Cubit<ShopState> {
       getData();
       navigateAndRemove(
         context: context,
-        newRouteName: '/home',
+        newRouteName: HomeScreen.routeName,
       );
       emit(RegisterSuccessState());
     }).catchError((e) {
-      RegisterErrorState(e);
+      print(e.toString);
+      RegisterErrorState(e.toString());
     });
   }
 

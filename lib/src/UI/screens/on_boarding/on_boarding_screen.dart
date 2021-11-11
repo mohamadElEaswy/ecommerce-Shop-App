@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop2/src/UI/Style/consts.dart';
+import 'package:shop2/src/UI/screens/login/login_screen.dart';
 import 'package:shop2/src/core/models/on_boarding_model.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
 import 'package:shop2/src/data/local/cache_helper.dart';
@@ -140,7 +141,7 @@ void submit({required BuildContext context}) {
       CacheHelper.getData(key: 'isFirst');
       navigateAndRemove(
         context: context,
-        newRouteName: '/login',
+        newRouteName: LogInScreen.routeName,
       );
     }
   });

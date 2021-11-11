@@ -21,10 +21,10 @@ void main() async {
 
   //check if is first && if is login
 
-  bool isFirst = CacheHelper.getData(key: 'isFirst') ?? false;
+  isFirst = CacheHelper.getData(key: 'isFirst') ?? false;
   token = CacheHelper.getData(key: 'token') ?? '';
   String? initRoute;
-  if (isFirst) {
+  if (isFirst!) {
     if (token!.isNotEmpty) {
       initRoute = HomeScreen.routeName;
     } else {
@@ -34,11 +34,15 @@ void main() async {
     initRoute = OnBoardingScreen.routeName;
   }
 
-  runApp(MyApp(initRoute: initRoute));
+  runApp(MyApp(
+      initRoute: initRoute
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.initRoute}) : super(key: key);
+  const MyApp({Key? key,
+    required this.initRoute
+  }) : super(key: key);
   final String? initRoute;
   // This widget is the root of your application.
   @override

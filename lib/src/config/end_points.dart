@@ -18,3 +18,4 @@ const String cart = 'carts';
 const String productDetails = 'products/';
 
 String? token;
+bool? isFirst;
