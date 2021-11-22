@@ -23,7 +23,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         return Scaffold(
           appBar: AppBar(),
           body: ConditionalBuilder(
-            condition: cubit.singleProduct != null,
+            condition: !cubit.loadSingleProduct,
             fallback: (context) =>
                 const Center(child: CircularProgressIndicator()),
             builder: (context) => Center(

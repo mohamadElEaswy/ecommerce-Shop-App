@@ -4,6 +4,7 @@ import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/UI/screens/home/product_details/product_details.dart';
 import 'package:shop2/src/core/route/const_route_functions.dart';
 import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
+
 class GridItem extends StatelessWidget {
   const GridItem({Key? key, required this.cubit, required this.index})
       : super(key: key);
@@ -13,9 +14,14 @@ class GridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        cubit.getSingleProduct(productId: cubit.homeModel!.data.products[index].id, context: context);
-        navigate(context: context, newRouteName: ProductDetails.routeName, args: cubit.homeModel!.data.products[index].id);
+      onTap: () {
+        cubit.getSingleProduct(
+            productId: cubit.homeModel!.data.products[index].id,
+            context: context);
+        navigate(
+            context: context,
+            newRouteName: ProductDetails.routeName,
+            args: cubit.homeModel!.data.products[index].id);
       },
       child: Container(
         // height: 400.0,
@@ -36,9 +42,11 @@ class GridItem extends StatelessWidget {
                           height: 200.0,
                           child: Center(child: CircularProgressIndicator()));
                     },
-                    errorBuilder: (context, error, stackTrace) => const SizedBox(
-                        height: 200.0,
-                        child: Center(child: Text('Some errors occurred!'))),
+                    errorBuilder: (context, error, stackTrace) =>
+                        const SizedBox(
+                            height: 200.0,
+                            child:
+                                Center(child: Text('Some errors occurred!'))),
                     height: 200.0,
                     fit: BoxFit.fitWidth,
                     image: NetworkImage(
@@ -64,17 +72,21 @@ class GridItem extends StatelessWidget {
                     IconButton(
                       onPressed: () async {
                         cubit.changeFavourites(
-                            productId: cubit.homeModel!.data.products[index].id);
+                            productId:
+                                cubit.homeModel!.data.products[index].id);
                       },
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
-                      ),color:
-                    cubit.homeModel!.data.products[index].inCart == true
-                        ? likeColor
-                        :
-                      Colors.grey[400],
-                    )
+                      icon: CircleAvatar(
+                        child: const Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: cubit.favorites[
+                                    cubit.homeModel!.data.products[index].id] ==
+                                true
+                            ? likeColor
+                            : Colors.grey[400],
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -89,7 +101,8 @@ class GridItem extends StatelessWidget {
               children: [
                 const SizedBox(height: 5.0),
                 Text(
-                  "price:\$" + cubit.homeModel!.data.products[index].price.toString(),
+                  "price:\$" +
+                      cubit.homeModel!.data.products[index].price.toString(),
                   style: const TextStyle(fontSize: 12.0, color: defaultColor),
                 ),
                 const SizedBox(height: 5.0),
@@ -140,8 +153,10 @@ class GridCategoriesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        cubit.getSingleProduct(productId: cubit.homeModel!.data.products[index].id, context: context);
+      onTap: () {
+        cubit.getSingleProduct(
+            productId: cubit.homeModel!.data.products[index].id,
+            context: context);
       },
       child: Container(
         color: Colors.white,
@@ -161,9 +176,11 @@ class GridCategoriesItem extends StatelessWidget {
                           height: 200.0,
                           child: Center(child: CircularProgressIndicator()));
                     },
-                    errorBuilder: (context, error, stackTrace) => const SizedBox(
-                        height: 200.0,
-                        child: Center(child: Text('Some errors occurred!'))),
+                    errorBuilder: (context, error, stackTrace) =>
+                        const SizedBox(
+                            height: 200.0,
+                            child:
+                                Center(child: Text('Some errors occurred!'))),
                     height: 200.0,
                     fit: BoxFit.fitWidth,
                     image: NetworkImage(
@@ -183,25 +200,22 @@ class GridCategoriesItem extends StatelessWidget {
                         ),
                       ),
                     const Spacer(),
-                    IconButton(
-                      onPressed: () async {
-                        cubit.changeFavourites(
-                            productId: cubit.favouriteModel!.data
-                                .dataLoad[index].product.id);
-                      },
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
-                      ),color: (cubit.favorites[cubit
-                        .favouriteModel!
-                        .data
-                        .dataLoad[index]
-                        .product
-                        .id] ==
-                        true)
-                        ? likeColor
-                        : Colors.grey[400],
-                    )
+                    // IconButton(
+                    //   onPressed: () async {
+                    //     cubit.changeFavourites(
+                    //         productId: cubit.favouriteModel!.data
+                    //             .dataLoad[index].product.id);
+                    //   },
+                    //   icon: CircleAvatar(
+                    //     child: const Icon(
+                    //       Icons.favorite_border,
+                    //       color: Colors.white,
+                    //     ),
+                    //     backgroundColor: (cubit.categoriesModel.data.data[1]. == true)
+                    //         ? likeColor
+                    //         : Colors.grey[400],
+                    //   ),
+                    // ),
                     // FavouriteButton(cubit:cubit,index: index,),
                   ],
                 ),
@@ -217,7 +231,8 @@ class GridCategoriesItem extends StatelessWidget {
               children: [
                 const SizedBox(height: 5.0),
                 Text(
-                  "price:\$" + cubit.homeModel!.data.products[index].price.toString(),
+                  "price:\$" +
+                      cubit.homeModel!.data.products[index].price.toString(),
                   style: const TextStyle(fontSize: 12.0, color: defaultColor),
                 ),
                 const SizedBox(height: 5.0),

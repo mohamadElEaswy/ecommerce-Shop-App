@@ -104,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       text: 'register now'.toUpperCase(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          ShopCubit.get(context).userRegister(
+                          return ShopCubit.get(context).userRegister(
                             email: emailController.text,
                             password: passwordController.text,
                             phone: phoneController.text,

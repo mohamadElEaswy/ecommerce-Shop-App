@@ -4,7 +4,6 @@ import 'package:shop2/src/UI/screens/home/categories/categories.dart';
 import 'package:shop2/src/UI/screens/home/favorite/favorite.dart';
 import 'package:shop2/src/UI/screens/home/home_screen.dart';
 import 'package:shop2/src/UI/screens/home/setting/setting.dart';
-import 'package:shop2/src/UI/screens/login/login_screen.dart';
 import 'package:shop2/src/config/end_points.dart';
 import 'package:shop2/src/core/models/cart_model.dart';
 import 'package:shop2/src/core/models/categories_model.dart';
@@ -351,18 +350,22 @@ class ShopCubit extends Cubit<ShopState> {
     });
   }
 
+  bool loadSingleProduct = false;
   // int? singleProductId;
   late ProductDetailsModel? singleProduct;
   void getSingleProduct(
       {required int productId, required BuildContext context}) {
     emit(SingleProductLoading());
+    loadSingleProduct = true;
     // singleProductId = productId;
 
     DioHelper.get(url: productDetails + '$productId', token: token)
         .then((value) {
       singleProduct = ProductDetailsModel.fromJson(value.data);
+      loadSingleProduct = false;
       emit(SingleProductSuccess(singleProduct: singleProduct!));
     }).catchError((e) {
+      loadSingleProduct = false;
       emit(SingleProductError(error: e.toString()));
     });
   }
