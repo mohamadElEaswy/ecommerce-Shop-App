@@ -1,5 +1,10 @@
-# shopApp Test
+# shopApp TRAINING
 
-This flutter project is still in development process, errors and misakes will be solved in the future
+This is a Flutter project training 
 
-Flutter Bloc & Model view & Dio & onGenerated Routes ........
+-Bloc pattern.
+-Dio.
+-MVC.
+-lints.
+-APIS.
+
