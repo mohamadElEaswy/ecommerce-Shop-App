@@ -110,8 +110,7 @@ class HomeBodyBuilder extends StatelessWidget {
                     const Spacer(),
                     ElevatedButton(
                       child: const Text('view all'),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 ),
@@ -203,7 +202,6 @@ class BuildCategoriesHomeItem extends StatelessWidget {
             image: NetworkImage(categoriesData.image),
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
-
               return const SizedBox(
                   height: 200.0,
                   child: Center(child: CircularProgressIndicator()));

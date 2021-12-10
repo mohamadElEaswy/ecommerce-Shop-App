@@ -4,7 +4,6 @@ import 'package:shop2/src/UI/Style/consts.dart';
 import 'package:shop2/src/cubit/auth_cubit/cubit.dart';
 import 'package:shop2/src/cubit/auth_cubit/state.dart';
 
-
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
@@ -55,7 +54,7 @@ class ProductsItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         cubit.getSingleProduct(
-            productId: cubit.homeModel!.data.products[index].id, context: context);
+            productId: cubit.homeModel!.data.products[index].id);
       },
       child: Container(
         color: Colors.white,
@@ -163,17 +162,19 @@ class ProductsItem extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                cubit.changeFavourites(productId: cubit.homeModel!.data.products[index].id);
+                cubit.changeFavourites(
+                    productId: cubit.homeModel!.data.products[index].id);
               },
               icon: CircleAvatar(
                 child: const Icon(
                   Icons.favorite_border,
                   color: Colors.white,
                 ),
-                backgroundColor:
-                    (cubit.favorites[cubit.homeModel!.data.products[index].id] == true)
-                        ? likeColor
-                        : Colors.grey[400],
+                backgroundColor: (cubit.favorites[
+                            cubit.homeModel!.data.products[index].id] ==
+                        true)
+                    ? likeColor
+                    : Colors.grey[400],
               ),
             ),
           ],

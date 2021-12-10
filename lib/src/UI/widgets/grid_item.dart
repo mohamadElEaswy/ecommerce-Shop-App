@@ -16,8 +16,7 @@ class GridItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         cubit.getSingleProduct(
-            productId: cubit.homeModel!.data.products[index].id,
-            context: context);
+            productId: cubit.homeModel!.data.products[index].id);
         navigate(
             context: context,
             newRouteName: ProductDetails.routeName,
@@ -69,6 +68,7 @@ class GridItem extends StatelessWidget {
                     //favourite button
                     // btnFav(cubit:cubit,num: index,)/
                     // GlobalFavouriteButton(cubit:cubit,num: index,),
+                    //add to favourites button
                     IconButton(
                       onPressed: () async {
                         cubit.changeFavourites(
@@ -112,9 +112,10 @@ class GridItem extends StatelessWidget {
                         '${cubit.homeModel!.data.products[index].oldPrice.round()}'
                             .toString(),
                     style: TextStyle(
-                        fontSize: 12.0,
-                        decoration: TextDecoration.lineThrough,
-                        color: Colors.grey[400]),
+                      fontSize: 12.0,
+                      decoration: TextDecoration.lineThrough,
+                      color: Colors.grey[400],
+                    ),
                   ),
               ],
             ),
@@ -155,8 +156,7 @@ class GridCategoriesItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         cubit.getSingleProduct(
-            productId: cubit.homeModel!.data.products[index].id,
-            context: context);
+            productId: cubit.homeModel!.data.products[index].id);
       },
       child: Container(
         color: Colors.white,

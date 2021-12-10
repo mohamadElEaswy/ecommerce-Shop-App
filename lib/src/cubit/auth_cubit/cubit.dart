@@ -53,7 +53,7 @@ class ShopCubit extends Cubit<ShopState> {
       );
       emit(LoginSuccessState(userModel));
     }).catchError((e) {
-      print(e);
+      // print(e);
       emit(LoginErrorState(e.toString()));
     });
   }
@@ -87,7 +87,7 @@ class ShopCubit extends Cubit<ShopState> {
       );
       emit(RegisterSuccessState());
     }).catchError((e) {
-      print(e.toString);
+      // print(e.toString);
       RegisterErrorState(e.toString());
     });
   }
@@ -143,7 +143,6 @@ class ShopCubit extends Cubit<ShopState> {
     emit(ChangePasswordVisibilityState());
   }
 
-//TODO Don't forget the pagination
 //get home products data
 //with pagination
 //   List<Products> homeProducts = [];
@@ -154,23 +153,23 @@ class ShopCubit extends Cubit<ShopState> {
     emit(HomeLoadingState(homeModel: homeModel));
     DioHelper.get(url: home, token: token).then((value) {
       homeModel = HomeModel.fromJson(value.data);
-      // print(homeModel.data.products.length);
-      // for (var element in homeModel!.data.products) {
-      //   favorites.addAll(
-      //     {
-      //       element.id: element.inFavorites,
-      //     },
-      //   );
-      // }
-      homeModel!.data.products.forEach(
-        (element) {
-          favorites.addAll(
-            {
-              element.id: element.inFavorites,
-            },
-          );
-        },
-      );
+      // print(homeModel!.data.products.length);
+      for (var element in homeModel!.data.products) {
+        favorites.addAll(
+          {
+            element.id: element.inFavorites,
+          },
+        );
+      }
+      // homeModel!.data.products.forEach(
+      //   (element) {
+      //     favorites.addAll(
+      //       {
+      //         element.id: element.inFavorites,
+      //       },
+      //     );
+      //   },
+      // );
       emit(HomeSuccessState(homeModel: homeModel));
     }).catchError((e) {
       emit(HomeErrorState(error: e.toString()));
@@ -280,23 +279,24 @@ class ShopCubit extends Cubit<ShopState> {
       url: favorite,
       token: token,
     ).then((value) {
-
       favouriteModel = FavouriteModel.fromJson(value.data);
       emit(FavoritesSuccessState(favouriteModel: favouriteModel));
     }).catchError((error) {
-      print(error.toString());
+      // print(error.toString());
       emit(FavoritesErrorState(error: error.toString()));
     });
   }
 
   late Map<int, bool?> cartData = {};
   late CartModel cartModel;
-  late CartModel changeCart;
+  late int cartId;
+  // late CartModel changeCart;
   //get cart data
   void getCartData() {
     emit(CartLoadingState());
     DioHelper.get(url: cart, token: token).then((value) {
       cartModel = CartModel.fromJson(value.data);
+
       for (var element in cartModel.data.cartItems) {
         cartData.addAll(
           {
@@ -313,7 +313,10 @@ class ShopCubit extends Cubit<ShopState> {
 
 //delete product from cart
 //update product from cart
+  bool cartLoading = false;
   void cartPost({required int productId}) {
+    cartLoading = true;
+    print(cartLoading.toString());
     emit(CartPostLoadingState());
     DioHelper.post(
       url: cart,
@@ -323,13 +326,23 @@ class ShopCubit extends Cubit<ShopState> {
       },
     ).then((value) {
       // cartData[productId] = !cartData[productId]!;
-      changeCart = CartModel.fromJson(value.data);
-      if (changeCart.status == true) {
+      cartModel = CartModel.fromJson(value.data);
+      if (cartModel.status == true) {
         getHomeData();
         getCartData();
+        getSingleProduct(productId: productId);
+        for (var element in cartModel.data.cartItems) {
+          cartData.addAll(
+            {
+              element.product.id: element.product.inCart,
+            },
+          );
+        }
       }
-      emit(CartPostSuccessState(cartModel: changeCart));
+      cartLoading = false;
+      emit(CartPostSuccessState(cartModel: cartModel));
     }).catchError((e) {
+      cartLoading = false;
       CartPostErrorState(error: e.toString());
     });
   }
@@ -340,11 +353,11 @@ class ShopCubit extends Cubit<ShopState> {
     DioHelper.put(url: cart + '/$cartItemId', token: token, data: {
       "quantity": quantity,
     }).then((value) {
-      changeCart = CartModel.fromJson(value.data);
-      if (changeCart.status == true) {
+      cartModel = CartModel.fromJson(value.data);
+      if (cartModel.status == true) {
         getCartData();
       }
-      emit(CartQuantitySuccessState(cartModel: changeCart));
+      emit(CartQuantitySuccessState(cartModel: cartModel));
     }).catchError((e) {
       emit(CartQuantityErrorState(error: e.toString()));
     });
@@ -353,8 +366,7 @@ class ShopCubit extends Cubit<ShopState> {
   bool loadSingleProduct = false;
   // int? singleProductId;
   late ProductDetailsModel? singleProduct;
-  void getSingleProduct(
-      {required int productId, required BuildContext context}) {
+  void getSingleProduct({required int productId}) {
     emit(SingleProductLoading());
     loadSingleProduct = true;
     // singleProductId = productId;
