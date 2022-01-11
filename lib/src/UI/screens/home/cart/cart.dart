@@ -52,9 +52,9 @@ class ProductsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () {print('tapped');
         cubit.getSingleProduct(
-            productId: cubit.homeModel!.data.products[index].id);
+            productId: cubit.cartModel.data.cartItems[index].product.id,);
       },
       child: Container(
         color: Colors.white,

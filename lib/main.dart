@@ -34,15 +34,15 @@ void main() async {
     initRoute = OnBoardingScreen.routeName;
   }
 
-  runApp(MyApp(
-      initRoute: initRoute
-  ));
+  runApp(
+    MyApp(
+      initRoute: initRoute,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key,
-    required this.initRoute
-  }) : super(key: key);
+  const MyApp({Key? key, required this.initRoute}) : super(key: key);
   final String? initRoute;
   // This widget is the root of your application.
   @override
@@ -52,7 +52,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<ShopCubit>(
           create: (BuildContext context) => ShopCubit()..getData(),
         ),
-
       ],
       child: BlocConsumer<ShopCubit, ShopState>(
         listener: (context, index) {},

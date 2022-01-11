@@ -353,11 +353,13 @@ class ShopCubit extends Cubit<ShopState> {
     DioHelper.put(url: cart + '/$cartItemId', token: token, data: {
       "quantity": quantity,
     }).then((value) {
-      cartModel = CartModel.fromJson(value.data);
-      if (cartModel.status == true) {
+      emit(CartQuantityLoadingState());
+
+        cartModel = CartModel.fromJson(value.data);
         getCartData();
-      }
+
       emit(CartQuantitySuccessState(cartModel: cartModel));
+
     }).catchError((e) {
       emit(CartQuantityErrorState(error: e.toString()));
     });
